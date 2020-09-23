@@ -1,31 +1,16 @@
 import React from "react";
-import AuthForm from "../auth.component";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-  useHistory,
-  useLocation,
-} from "react-router-dom";
+import AuthForm from "../authForm";
+import LoginForm from "../authForm";
+import { API } from "../../API/api";
 
 class AuthPage extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  submit = (formData) => {
+    this.props.authUser(formData);
+  };
 
   render() {
-    if (this.props.state.isSignin || localStorage.getItem("isAuth")) {
-      return <Redirect to='/projects' />;
-    }
-    return (
-      <AuthForm
-        handleSubmit={this.props.handleSubmit}
-        authData={this.props.authData}
-        state={this.props.state}
-      />
-    );
+    console.log("authForm propas", this.props);
+    return <LoginForm onSubmit={this.submit} />;
   }
 }
 export default AuthPage;

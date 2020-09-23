@@ -1,34 +1,20 @@
 import React from "react";
 import UserGreeting from "../UserGreeting";
 import GuestGreeting from "../GuestGreeting";
-import RegistrationForm from "../registration.component";
+import RegistrationForm from "../registrationForm";
 
 class RegistrationPage extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  submit = (data) => {
+    this.props.registerUser(data);
+  };
   render() {
-    const isRegistr = this.props.isRegistr;
-    let heading = null;
-    let form = null;
-    if (isRegistr) {
-      heading = <UserGreeting user={this.props.state.username} />;
-      form = null;
-    } else {
-      heading = <GuestGreeting />;
-      form = (
-        <RegistrationForm
-          updateData={this.props.updateData}
-          handleSubmit={this.props.handleSubmit}
-        />
-      );
-    }
     return (
-      <div>
-        {heading}
-        {form}
-      </div>
+      <RegistrationForm
+        registerUser={this.props.registerUser}
+        onSubmit={this.submit}
+      />
     );
   }
 }
+
 export default RegistrationPage;

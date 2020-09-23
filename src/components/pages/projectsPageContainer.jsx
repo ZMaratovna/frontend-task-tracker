@@ -30,9 +30,11 @@ const mapStateToProps = (state) => ({
   userId: localStorage.getItem("userId"),
 });
 
-export default connect(mapStateToProps, {
+ProjectsPageContainer = connect(mapStateToProps, {
   getProjectsThunk,
   getProjectThunk,
   addProjectThunk,
   assignProjectThunk,
 })(ProjectsPageContainer);
+
+export default ProjectsPageContainer;

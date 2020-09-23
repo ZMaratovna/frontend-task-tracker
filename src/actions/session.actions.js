@@ -1,15 +1,16 @@
 import { API } from "../API/api";
-import jwt_decode from "jwt-decode";
+import jwt from "jsonwebtoken";
 
 export const RECEIVE_CURRENT_USER = "RECEIVE_CURRENT_USER";
 export const LOGOUT_CURRENT_USER = "LOGOUT_CURRENT_USER";
 export const RECEIVE_SESSION_ERRORS = "RECEIVE_SESSION_ERRORS";
 export const GET_ERRORS = "GET_ERRORS";
+export const REGISTER = "REGISTER";
 export const REMOVE_SESSION_ERRORS = "REMOVE_SESSION_ERRORS";
 
-export const receiveCurrentUser = (currentUser) => ({
+export const receiveCurrentUser = (payload) => ({
   type: RECEIVE_CURRENT_USER,
-  currentUser,
+  payload,
 });
 
 export const logoutCurrentUser = () => ({
@@ -21,41 +22,26 @@ export const receiveErrors = (errors) => ({
   errors,
 });
 
-export const signup = (user) => (dispatch) =>
-  API.postNewUser(user).then(
-    (res) => {
-      // Save to localStorage
-      const { token } = res.data;
-      // Set token to ls
-      localStorage.setItem("jwtToken", token);
-      // Set token to Auth header
-      APIUtil.setAuthToken(token);
-      // Decode token to get user data
-      const decoded = jwt_decode(token);
-      // Set current user
-      dispatch(setCurrentUser(decoded));
-    },
-    (err) => {
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data,
-      });
-    }
-  );
+export const registerUserThunk = (userData) => (dispatch) => {
+  API.postNewUser(userData).then((user) => dispatch(registerUser(user)));
+};
 
-export const login = (user) => (dispatch) =>
-  APIUtil.loginUser(user).then(
+export const registerUser = (payload) => {
+  return {
+    type: REGISTER,
+  };
+};
+
+// Logged in
+export const authUser = (userData) => (dispatch) =>
+  API.auth(userData).then(
     (res) => {
-      // Save to localStorage
-      const { token } = res.data;
-      // Set token to ls
+      const token = res.data;
       localStorage.setItem("jwtToken", token);
-      // Set token to Auth header
-      APIUtil.setAuthToken(token);
-      // Decode token to get user data
-      const decoded = jwt_decode(token);
-      // Set current user
-      dispatch(setCurrentUser(decoded));
+      API.setAuthToken(token);
+      const decoded = jwt.verify(token, "Secret");
+      console.log("decoded", decoded);
+      dispatch(receiveCurrentUser(decoded));
     },
     (err) =>
       dispatch({
@@ -66,11 +52,8 @@ export const login = (user) => (dispatch) =>
 
 // Log user out
 export const logoutUser = () => (dispatch) => {
-  // Remove token from localStorage
   localStorage.removeItem("jwtToken");
-  // Remove auth header for future requests
-  APIUtil.setAuthToken(false);
-  // Set current user to {} which will set isAuthenticated to false
+  API.setAuthToken(false);
   dispatch(logoutCurrentUser());
 };
 

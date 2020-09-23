@@ -6,6 +6,7 @@ export const API = {
   //Registration and authentification
   async postNewUser(userData) {
     const response = await axios.post(`${baseURL}register`, userData);
+    console.log(response);
     return response.data;
   },
   async auth(authData) {
@@ -13,10 +14,19 @@ export const API = {
     try {
       const response = await axios.post(`${baseURL}auth`, authData);
       console.log(response);
-      return response.data;
+      return response;
     } catch (e) {
       console.log(e);
       return e;
+    }
+  },
+  setAuthToken(token) {
+    if (token) {
+      // Apply to every request
+      axios.defaults.headers.common["Authorization"] = token;
+    } else {
+      // Delete auth header
+      delete axios.defaults.headers.common["Authorization"];
     }
   },
   async getUser(id) {
