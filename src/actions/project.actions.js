@@ -18,11 +18,12 @@ export const addProjectThunk = (id, data) => (dispatch) => {
 export const getProject = (payload) => {
   return {
     type: GET_PROJECT,
-    project: payload.data,
+    project: payload,
   };
 };
+
 export const getProjectThunk = (ProjectId) => (dispatch) => {
-  API.getProject(ProjectId).then((project) => getProject(project));
+  API.getProject(ProjectId).then((project) => dispatch(getProject(project)));
 };
 export const getProjects = (payload) => {
   console.log("payload data", payload);

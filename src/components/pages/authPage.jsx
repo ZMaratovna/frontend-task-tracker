@@ -1,16 +1,24 @@
 import React from "react";
-import AuthForm from "../authForm";
-import LoginForm from "../authForm";
+import LoginForm from "../forms/authForm";
 import { API } from "../../API/api";
 
 class AuthPage extends React.Component {
   submit = (formData) => {
     this.props.authUser(formData);
+    console.log("sunmit auth form");
   };
 
   render() {
-    console.log("authForm propas", this.props);
-    return <LoginForm onSubmit={this.submit} />;
+    {
+      return !this.props.isLoggedIn ? (
+        <div>
+          <LoginForm onSubmit={this.submit} />
+        </div>
+      ) : (
+        (window.location.href = "/projects")
+      );
+    }
   }
 }
+
 export default AuthPage;

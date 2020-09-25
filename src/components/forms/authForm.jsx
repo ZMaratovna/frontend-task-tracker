@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import myInput from "./inputComponent";
-import { validate } from "../utils/formValidation";
+import { validate } from "../../utils/formValidation";
 
 class LoginForm extends Component {
   render() {

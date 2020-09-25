@@ -1,5 +1,6 @@
 import { API } from "../API/api";
 import jwt from "jsonwebtoken";
+import jwt_decode from "jwt-decode";
 
 export const RECEIVE_CURRENT_USER = "RECEIVE_CURRENT_USER";
 export const LOGOUT_CURRENT_USER = "LOGOUT_CURRENT_USER";
@@ -8,10 +9,10 @@ export const GET_ERRORS = "GET_ERRORS";
 export const REGISTER = "REGISTER";
 export const REMOVE_SESSION_ERRORS = "REMOVE_SESSION_ERRORS";
 
-export const receiveCurrentUser = (payload) => ({
-  type: RECEIVE_CURRENT_USER,
-  payload,
-});
+// export const receiveCurrentUser = (payload) => ({
+//   type: RECEIVE_CURRENT_USER,
+//   payload,
+// });
 
 export const logoutCurrentUser = () => ({
   type: LOGOUT_CURRENT_USER,
@@ -39,9 +40,8 @@ export const authUser = (userData) => (dispatch) =>
       const token = res.data;
       localStorage.setItem("jwtToken", token);
       API.setAuthToken(token);
-      const decoded = jwt.verify(token, "Secret");
-      console.log("decoded", decoded);
-      dispatch(receiveCurrentUser(decoded));
+      const decoded = jwt_decode(token, "Secret");
+      dispatch(setCurrentUser(decoded));
     },
     (err) =>
       dispatch({
@@ -49,6 +49,19 @@ export const authUser = (userData) => (dispatch) =>
         payload: err.response.data,
       })
   );
+
+export const authSuccess = (token) => (dispatch) => {
+  console.log("authsuccess");
+  if (token) {
+    console.log(token);
+    API.setAuthToken(token);
+    const decoded = jwt_decode(token, "Secret");
+    console.log("decoded".decoded);
+    dispatch(setCurrentUser(decoded));
+  } else {
+    dispatch(logoutCurrentUser());
+  }
+};
 
 // Log user out
 export const logoutUser = () => (dispatch) => {

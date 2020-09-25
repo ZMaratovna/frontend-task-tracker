@@ -21,12 +21,12 @@ const ProjectsReducer = (state = initialState, action) => {
     case GET_PROJECT:
       return {
         ...state,
-        currentProject: action.project,
+        current: action.project,
       };
     case GET_PROJECTS:
       return { ...state, projects: [...action.projects] };
 
-    case ASSIGN_PROJECT:
+    case ASSIGN_PROJECT: {
       return {
         ...state,
         executors: [
@@ -34,6 +34,7 @@ const ProjectsReducer = (state = initialState, action) => {
           { developerId: action.executor, projectId: action.project },
         ],
       };
+    }
     default:
       return state;
   }

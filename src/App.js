@@ -1,21 +1,37 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import HeaderContainer from "./components/Header/HeaderContainer";
 import RegistrationPageContainer from "./components/pages/registrPageContainer";
-// import ProjectsPageContainer from "./components/pages/projectsPageContainer";
-import Projects from "./components/projects";
 import authPageContainer from "./components/pages/authPageContainer";
+import SplashPage from "./components/pages/splashPage";
+import { AuthRoute, ProtectedRoute } from "./utils/route_util";
+import ProjectsPageContainer from "./components/pages/projectsPageContainer";
+import ProjectContainer from "./components/Projects/ProjectContainer";
 
 function App() {
   return (
-    <Switch>
-      <Route
-        exact
-        path='/register'
-        component={RegistrationPageContainer}
-      ></Route>
-      <Route exact path='/auth' component={authPageContainer}></Route>
-      <Route exactpath='/projects' component={Projects}></Route>
-    </Switch>
+    <div className='app'>
+      <HeaderContainer />
+      <Switch>
+        <Route exact path='/' component={SplashPage}></Route>
+        <AuthRoute
+          exact
+          path='/register'
+          component={RegistrationPageContainer}
+        ></AuthRoute>
+        <AuthRoute exact path='/auth' component={authPageContainer}></AuthRoute>
+        <ProtectedRoute
+          exact
+          path='/projects'
+          component={ProjectsPageContainer}
+        ></ProtectedRoute>
+        <ProtectedRoute
+          exact
+          path='/projects/:id'
+          component={ProjectContainer}
+        ></ProtectedRoute>
+      </Switch>
+    </div>
   );
 }
 export default App;

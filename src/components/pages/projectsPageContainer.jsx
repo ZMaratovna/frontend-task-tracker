@@ -9,17 +9,25 @@ import {
 import { connect } from "react-redux";
 
 class ProjectsPageContainer extends React.Component {
-  componentDidMount() {
-    let userId = localStorage.getItem("userId");
-    this.props.getProjectsThunk(userId);
+  constructor(props) {
+    super(props);
+    this.state = {
+      projects: [],
+    };
   }
+
+  async componentDidMount() {
+    await this.props.getProjectsThunk(this.props.userId);
+  }
+
   render() {
     return (
       <ProjectsPage
         projects={this.props.projects}
         userId={this.props.userId}
         addProject={this.props.addProjectThunk}
-        getProject={this.props.getProjectsThunk}
+        getProject={this.props.getProjectThunk}
+        assignProject={this.props.assignProjectThunk}
       />
     );
   }
@@ -27,7 +35,7 @@ class ProjectsPageContainer extends React.Component {
 
 const mapStateToProps = (state) => ({
   projects: state.Projects.projects,
-  userId: localStorage.getItem("userId"),
+  userId: state.Session.id,
 });
 
 ProjectsPageContainer = connect(mapStateToProps, {

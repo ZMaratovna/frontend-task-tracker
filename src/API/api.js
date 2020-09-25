@@ -50,10 +50,7 @@ export const API = {
     return response;
   },
   async getUserProjects(userId) {
-    console.log("get user projects request");
     const response = await axios.get(`${baseURL}users/projects/${userId}`);
-    console.log("get user projects response", response.data);
-
     return response.data;
   },
   async getProject(projectId) {
@@ -69,7 +66,14 @@ export const API = {
       taskData
     );
     console.log(response.data);
-    return response;
+    return response.data;
+  },
+  async geUserTasks(userId, projectId) {
+    const response = await axios.get(
+      `${baseURL}tasks/projectId=${projectId}&userId=${userId}`
+    );
+    console.log("api getIserTasks response", response.data);
+    return response.data;
   },
   async getProjectTasks(projectId) {
     const response = await axios.get(`${baseURL}tasks/project/${projectId}`);
@@ -82,11 +86,10 @@ export const API = {
     return response;
   },
   async editTask(taskId, taskData) {
-    const response = await axios.post(
-      `${baseURL}tasks/update/${taskId}`,
-      taskData
-    );
-    console.log(response.data);
+    const response = await axios.post(`${baseURL}tasks/update/${taskId}`, {
+      content: taskData,
+    });
+    console.log("editTask response", response.data);
     return response;
   },
   async assignTask(developer, taskId) {
@@ -96,6 +99,12 @@ export const API = {
     );
     console.log(response.data);
     return response;
+  },
+  async changeStatus(taskId, status) {
+    const response = await axios.post(`${baseURL}tasks/status/${taskId}`, {
+      status: status,
+    });
+    return response.data;
   },
   // Comments
   async createComment(taskId, commentData) {

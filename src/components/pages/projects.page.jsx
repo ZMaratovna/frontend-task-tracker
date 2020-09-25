@@ -1,11 +1,26 @@
 import React from "react";
-import { API } from "../../API/api";
-import Projects from "../projects.component";
-import AddProject from "../AddProject";
+import Projects from "../Projects/ProjectItem.jsx";
+import AddProject from "../Projects/AddProject";
 
 class ProjectsPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      projects: [],
+    };
+  }
+
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   if (prevState.projects !== nextProps.projects) {
+  //     console.log("prevState", prevState);
+  //     console.log("nextProps", nextProps);
+  //   }
+  //   return {
+  //     projects: nextProps.projects,
+  //   };
+  // }
+
   render() {
-    console.log(this.props);
     return (
       <div>
         <Projects
