@@ -56,7 +56,6 @@ export const authSuccess = (token) => (dispatch) => {
     console.log(token);
     API.setAuthToken(token);
     const decoded = jwt_decode(token, "Secret");
-    console.log("decoded".decoded);
     dispatch(setCurrentUser(decoded));
   } else {
     dispatch(logoutCurrentUser());
@@ -65,6 +64,7 @@ export const authSuccess = (token) => (dispatch) => {
 
 // Log user out
 export const logoutUser = () => (dispatch) => {
+  console.log("LOGOUT USER");
   localStorage.removeItem("jwtToken");
   API.setAuthToken(false);
   dispatch(logoutCurrentUser());

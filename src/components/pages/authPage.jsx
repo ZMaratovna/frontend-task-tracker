@@ -13,6 +13,10 @@ class AuthPage extends React.Component {
       return !this.props.isLoggedIn ? (
         <div>
           <LoginForm onSubmit={this.submit} />
+          <span>
+            If you have an account, sign in; if you don't –{" "}
+            <a href='/register'>register.</a>
+          </span>
         </div>
       ) : (
         (window.location.href = "/projects")

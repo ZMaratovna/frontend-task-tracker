@@ -1,4 +1,5 @@
 import * as axios from "axios";
+import { getDevelopersThunk } from "../actions/task.actions";
 
 const baseURL = "http://localhost:5001/";
 
@@ -51,6 +52,7 @@ export const API = {
   },
   async getUserProjects(userId) {
     const response = await axios.get(`${baseURL}users/projects/${userId}`);
+    console.log(response.data);
     return response.data;
   },
   async getProject(projectId) {
@@ -68,21 +70,24 @@ export const API = {
     console.log(response.data);
     return response.data;
   },
-  async geUserTasks(userId, projectId) {
-    const response = await axios.get(
-      `${baseURL}tasks/projectId=${projectId}&userId=${userId}`
-    );
+  async getDevelopers() {
+    const response = await axios.get(`${baseURL}users/`);
+    console.log("get developers response", response.data);
+    return response.data;
+  },
+  async geUserTasks(userId) {
+    const response = await axios.get(`${baseURL}tasks/${userId}`);
     console.log("api getIserTasks response", response.data);
     return response.data;
   },
   async getProjectTasks(projectId) {
     const response = await axios.get(`${baseURL}tasks/project/${projectId}`);
-    console.log(response.data);
+    console.log("project tasks =", response.data);
     return response.data;
   },
   async deleteTask(taskId) {
     const response = await axios.delete(`${baseURL}tasks/${taskId}`);
-    console.log(response.data);
+    console.log("delete task response from api ", response.data);
     return response;
   },
   async editTask(taskId, taskData) {
@@ -90,15 +95,15 @@ export const API = {
       content: taskData,
     });
     console.log("editTask response", response.data);
-    return response;
+    return response.data;
   },
   async assignTask(developer, taskId) {
     const response = await axios.post(
       `${baseURL}tasks/assign/${taskId}`,
       developer
     );
-    console.log(response.data);
-    return response;
+    console.log("assigned task", response.data);
+    return response.data;
   },
   async changeStatus(taskId, status) {
     const response = await axios.post(`${baseURL}tasks/status/${taskId}`, {

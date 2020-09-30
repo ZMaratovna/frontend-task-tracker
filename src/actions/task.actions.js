@@ -1,11 +1,13 @@
 import { API } from "../API/api";
 export const SET_STATUS = "SET_STATUS";
-export const GET_PROJECT_TASKS = "GET_ALL_TASKS";
+export const GET_PROJECT_TASKS = "GET_PROJECT_TASKS";
+// export const GET_USER_TASKS = "GET_USER_TASKS";
 export const GET_ASSIGN_TASKS = "GET_ASSIGN_TASKS";
 export const ADD_TASK = "ADD_TASK";
 export const EDIT_TASK = "EDIT_TASK";
 export const DELETE_TASK = "DELETE_TASK";
 export const ASSIGN_TASK = "ASSIGN_TASK";
+
 //
 export function addTask(payload) {
   return {
@@ -24,10 +26,8 @@ export const getUserTasks = (payload) => {
   };
 };
 //
-export const getUserTasksThunk = (projectId, userId) => (dispatch) => {
-  API.geUserTasks(projectId, userId).then((tasks) =>
-    dispatch(getUserTasks(tasks))
-  );
+export const getUserTasksThunk = (userId) => (dispatch) => {
+  API.geUserTasks(userId).then((tasks) => dispatch(getUserTasks(tasks)));
 };
 //
 export const setStatusThunk = (taskId, status) => (dispatch) => {
@@ -53,6 +53,7 @@ export const fetchTasks = (id) => (dispatch) => {
 };
 //
 export const deleteTask = (payload) => {
+  console.log("delete payload", payload);
   return {
     type: DELETE_TASK,
     task: payload.data,
@@ -66,7 +67,7 @@ export const deleteTaskThunk = (id) => (dispatch) => {
 export function editTask(payload) {
   return {
     type: EDIT_TASK,
-    task: payload.data,
+    task: payload,
   };
 }
 export const editTaskThunk = (id, text) => (dispatch) => {
@@ -76,7 +77,7 @@ export const editTaskThunk = (id, text) => (dispatch) => {
 export function assignTask(payload) {
   return {
     type: ASSIGN_TASK,
-    task: payload,
+    executor: payload.executor,
   };
 }
 export const assignTaskThunk = (dev, taskId) => (dispatch) => {

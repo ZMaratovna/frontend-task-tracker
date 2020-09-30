@@ -10,16 +10,6 @@ class ProjectsPage extends React.Component {
     };
   }
 
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   if (prevState.projects !== nextProps.projects) {
-  //     console.log("prevState", prevState);
-  //     console.log("nextProps", nextProps);
-  //   }
-  //   return {
-  //     projects: nextProps.projects,
-  //   };
-  // }
-
   render() {
     return (
       <div>

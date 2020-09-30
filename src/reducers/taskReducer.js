@@ -38,6 +38,7 @@ const taskReducer = (state = initialState, action) => {
     }
 
     case DELETE_TASK: {
+      console.log("action.task._id ", action.task._id);
       return Object.assign({}, state, {
         projectTasks: state.projectTasks.filter(
           (task) => task._id !== action.task._id
@@ -47,8 +48,8 @@ const taskReducer = (state = initialState, action) => {
     case ASSIGN_TASK: {
       return Object.assign({}, state, {
         projectTasks: state.projectTasks.map((task) => {
-          if (task._id === action.task._id) {
-            return Object.assign({}, task, { executor: action.task.executor });
+          if (task._id === action.taskId) {
+            return Object.assign({}, task, { executor: action.executor });
           }
           return task;
         }),

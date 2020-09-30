@@ -1,36 +1,14 @@
-// import { API } from "../API/api";
+import { API } from "../API/api";
+export const GET_DEVELOPERS = "GET_DEVELOPERS";
 
-// export const SET_USERDATA = "SET_USERDATA";
-// export const SET_USERNAME = "SET_USERNAME";
+export const getDevelopersThunk = () => (dispatch) => {
+  API.getDevelopers().then((devs) => dispatch(getDevelopers(devs)));
+};
 
-// export const GET_ERRORS = "GET_ERRORS";
-
-// export const setUserName = (payload) => {
-//   return {
-//     type: SET_USERNAME,
-//     username: payload.username,
-//   };
-// };
-
-// export const setUserData = (payload) => {
-//   return {
-//     type: SET_USERDATA,
-//     username: payload.username,
-//     position: payload.position,
-//     id: payload._id,
-//     email: payload.email,
-//   };
-// };
-// export const getUser = (payload) => {
-//   return {
-//     type: SET_USERDATA,
-//     username: payload.username,
-//     position: payload.position,
-//     id: payload._id,
-//     email: payload.email,
-//   };
-// };
-
-// export const getUserData = (id) => (dispatch) => {
-//   API.getUser(id).then((user) => dispatch(getUser(user)));
-// };
+export const getDevelopers = (payload) => {
+  console.log("get developers payload", payload);
+  return {
+    type: GET_DEVELOPERS,
+    devs: payload,
+  };
+};

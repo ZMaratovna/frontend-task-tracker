@@ -8,14 +8,14 @@ export default function ProjectItem(props) {
     <li key={project._id}>
       <h2>{project.name}</h2>
       <p>{project.content}</p>
-      <span>Tasks: {project.tasks.length}</span>
+      <span>Go to tasks</span>
       <button
-        onClick={(e) => {
+        onClick={() => {
           props.getProject(project._id);
           history.push(`/projects/${project._id}`);
         }}
       >
-        Get info
+        ->
       </button>
     </li>
   ));
