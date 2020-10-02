@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import styles from "./forms.module.css";
 import { Field, reduxForm } from "redux-form";
 import myInput from "./inputComponent";
 import { validate } from "../../utils/formValidation";

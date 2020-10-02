@@ -9,12 +9,47 @@ import ProjectsPageContainer from "./components/pages/projectsPageContainer";
 import ProjectContainer from "./components/Projects/ProjectContainer";
 import TasksContainer from "./components/Tasks/TasksContainer";
 import MyProjectsContainer from "./components/Projects/MyProjectsContainer";
+import { AppBar, Container, Toolbar, Typography } from "@material-ui/core";
+import MenuIcon from "@material-ui/icons/Menu";
+import Button from "@material-ui/core/Button";
+import { IconButton } from "@material-ui/core";
+import { fade, makeStyles } from "@material-ui/core/styles";
 import "./App.css";
 
 function App() {
+  const useStyle = makeStyles((theme) => ({
+    root: { flexGrow: 1 },
+    menuButton: { marginRight: theme.spacing(1) },
+    title: {
+      flexGrow: 1,
+    },
+  }));
+  const classes = useStyle();
   return (
     <div className='app-wrapper'>
-      <HeaderContainer />
+      <AppBar position='fixed'>
+        <Container>
+          <Toolbar>
+            <IconButton edge='end' className={classes.menuButton}>
+              <MenuIcon color='secondary'></MenuIcon>
+            </IconButton>
+            <Typography variant='h6' className={classes.title}>
+              Task Tracker
+            </Typography>
+            <Button
+              href='/auth'
+              className={classes.menuButton}
+              variant='outlined'
+              color='inherit'
+            >
+              Log In
+            </Button>
+            <Button variant='contained' color='secondary' href='/register'>
+              Sign Up
+            </Button>
+          </Toolbar>
+        </Container>
+      </AppBar>
       <div className='app-content'>
         <Switch>
           <Route exact path='/' component={SplashPage}></Route>
