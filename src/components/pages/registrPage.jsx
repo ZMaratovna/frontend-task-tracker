@@ -3,6 +3,8 @@ import UserGreeting from "../UserGreeting";
 import GuestGreeting from "../GuestGreeting";
 import styles from "./register.module.css";
 import RegistrationForm from "../forms/registrationForm";
+import Box from "@material-ui/core/Box";
+import Image from "../../img/good_team.svg";
 
 class RegistrationPage extends React.Component {
   submit = (data) => {
@@ -10,10 +12,21 @@ class RegistrationPage extends React.Component {
   };
   render() {
     return (
-      <RegistrationForm
-        registerUser={this.props.registerUser}
-        onSubmit={this.submit}
-      />
+      <Box
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100vh",
+          width: "100vw",
+          backgroundImage: `url(${Image})`,
+        }}
+      >
+        <RegistrationForm
+          registerUser={this.props.registerUser}
+          onSubmit={this.submit}
+        />
+      </Box>
     );
   }
 }

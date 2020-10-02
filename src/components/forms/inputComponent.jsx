@@ -1,11 +1,13 @@
 import React, { Fragment } from "react";
-import styles from "./forms.module.css";
+import { InputLabel } from "@material-ui/core";
+import Input from "@material-ui/core/Input";
 const myInput = (props) => {
   const { input, label, type, placeholder, meta } = props;
   return (
     <Fragment>
-      <input
-        className={styles.input}
+      <Input
+        fullWidth
+        style={{ height: "50px" }}
         {...input}
         type={type}
         placeholder={placeholder}

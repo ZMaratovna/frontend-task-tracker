@@ -1,97 +1,141 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
-import styles from "./forms.module.css";
-import myInput from "./inputComponent";
 import { validate } from "../../utils/formValidation";
-
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
+import myInput from "./inputComponent";
+import Container from "@material-ui/core/Container";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import FormControl from "@material-ui/core/FormControl";
+import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
 
 const RegistrationForm = (props) => {
-  const { handleSubmit } = props;
+  const { handleSubmit, pristine, reset, submitting } = props;
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      width: "400px",
+    },
+    field: {
+      // padding: theme.spacing(3),
+      marginBottom: "10px",
+      height: "70px",
+      textAlign: "center",
+      color: theme.palette.text.secondary,
+    },
+    formWrapper: {
+      display: "flex",
+      justifyContent: "center",
+      padding: "50px 20px",
+      width: "400px",
+      border: "1px solid #3f51b5",
+      borderRadius: "10px",
+      boxShadow: "1px 1px 2px #3f51b5",
+      backgroundColor: "rgba(255,255,255,0.9)",
+    },
+    label: {
+      color: "rgba(100, 100, 100, 1)",
+    },
+    FormControl: {
+      marginTop: "30px",
+      marginBottom: "20px",
+    },
+    form: {
+      width: "70%",
+    },
+  }));
 
-  // const useStyles = makeStyles((theme) => ({
-  //   paper: {
-  //     marginTop: theme.spacing(8),
-  //     display: "flex",
-  //     flexDirection: "column",
-  //     alignItems: "center",
-  //   },
-  //   avatar: {
-  //     margin: theme.spacing(1),
-  //     backgroundColor: theme.palette.secondary.main,
-  //   },
-  //   form: {
-  //     width: "100%", // Fix IE 11 issue.
-  //     marginTop: theme.spacing(3),
-  //   },
-  //   submit: {
-  //     margin: theme.spacing(3, 0, 2),
-  //   },
-  // }));
+  const classes = useStyles();
 
-  // export default function SignUp() {
-  //   const classes = useStyles();
-  // }
-  return (
-    <form className={styles.sendForm} onSubmit={handleSubmit}>
-      <div className={styles.nameGroup}>
-        <Field
-          id='username'
-          name='username'
-          type='text'
-          label='Full name'
-          placeholder='John Doe'
-          component={myInput}
-        />
-        <div>
-          <label>Position</label>
-          <Field
-            className={styles.select}
-            id='position'
-            name='position'
-            label='Position'
+  const renderRadioGroup = ({ input, ...rest }) => {
+    return (
+      <FormControl component='fieldset' className={classes.FormControl}>
+        <RadioGroup
+          aria-label='position'
+          name='position'
+          {...input}
+          {...rest}
+          valueSelected={input.value}
+          onChange={(event, value) => input.onChange(value)}
+        >
+          <FormControlLabel
+            value='developer'
+            control={<Radio />}
+            label='developer'
+            className={classes.label}
+          />
+          <FormControlLabel
             value='manager'
-            component='select'
-          >
-            <option />
-            <option value='manager'>Manager</option>
-            <option value='developer'>Developer</option>
-          </Field>
-        </div>
-      </div>
+            control={<Radio />}
+            label='manager'
+            className={classes.label}
+          />
+        </RadioGroup>
+      </FormControl>
+    );
+  };
 
-      <Field
-        id='email'
-        name='email'
-        label='Email'
-        type='text'
-        placeholder='Email'
-        component={myInput}
-      />
-      <Field
-        id='password'
-        name='password'
-        type='password'
-        label='Password'
-        placeholder='Password'
-        component={myInput}
-      />
-      <button className={styles.btnSubmit} type='submit'>
-        Register
-      </button>
-    </form>
+  return (
+    <Container className={classes.formWrapper}>
+      <form className={classes.form} onSubmit={handleSubmit}>
+        <div>
+          <Field
+            className={classes.field}
+            id='username'
+            name='username'
+            type='text'
+            label='Full name'
+            placeholder='Full name'
+            component={myInput}
+          />
+        </div>
+        <div>
+          <Field
+            name='email'
+            component={myInput}
+            className={classes.field}
+            id='email'
+            label='Email'
+            type='text'
+            placeholder='Email'
+          />
+        </div>
+        <div>
+          <Field
+            name='password'
+            className={classes.field}
+            id='password'
+            type='password'
+            label='Password'
+            placeholder='Password'
+            component={myInput}
+          />
+        </div>
+        <div>
+          <Field name='position' component={renderRadioGroup}></Field>
+        </div>
+        <div>
+          <Button
+            variant='contained'
+            className={classes.button}
+            disabled={submitting}
+            color='secondary'
+            fullWidth
+          >
+            {submitting ? "In progress…" : "Sign Up"}
+          </Button>
+          <Button
+            type='button'
+            fullWidth
+            disabled={pristine || submitting}
+            onClick={reset}
+          >
+            Clear Values
+          </Button>
+        </div>
+      </form>
+    </Container>
   );
 };
 
