@@ -1,16 +1,62 @@
-import React, { Component } from "react";
-import styles from "./forms.module.css";
+import React from "react";
 import { Field, reduxForm } from "redux-form";
 import myInput from "./inputComponent";
 import { validate } from "../../utils/formValidation";
+import Container from "@material-ui/core/Container";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import Link from "@material-ui/core/Link";
 
-class LoginForm extends Component {
-  render() {
-    console.log("Login from props", this.props);
-    const { handleSubmit } = this.props;
-    return (
+import { makeStyles } from "@material-ui/core/styles";
+
+const LoginForm = (props) => {
+  const { handleSubmit, submitting } = props;
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      width: "400px",
+    },
+    field: {
+      marginBottom: "10px",
+      height: "70px",
+      textAlign: "center",
+      color: theme.palette.text.secondary,
+    },
+    formWrapper: {
+      display: "flex",
+      justifyContent: "center",
+      padding: "50px 20px",
+      width: "400px",
+      border: "1px solid #3f51b5",
+      borderRadius: "10px",
+      boxShadow: "1px 1px 2px #3f51b5",
+      backgroundColor: "rgba(255,255,255,0.9)",
+    },
+    label: {
+      color: "rgba(100, 100, 100, 1)",
+    },
+    form: {
+      width: "70%",
+    },
+    comment: {
+      fontSize: "12px",
+      color: "rgb(52,53,64)",
+      marginTop: "10px",
+    },
+    commentLink: {
+      padding: " 0px  10px",
+      color: "#3f51b5",
+    },
+    button: {
+      marginTop: "20px",
+    },
+  }));
+
+  const classes = useStyles();
+  return (
+    <Container className={classes.formWrapper}>
       <form onSubmit={handleSubmit}>
         <Field
+          className={classes.field}
           name='email'
           label='Email'
           component={myInput}
@@ -18,23 +64,39 @@ class LoginForm extends Component {
           placeholder='Email'
         />
         <Field
+          className={classes.field}
           name='password'
           label='Password'
           component={myInput}
           type='password'
           placeholder='Password'
         />
-        <button type='submit' label='submit'>
-          Submit
-        </button>
+        <Button
+          type='submit'
+          variant='contained'
+          className={classes.button}
+          disabled={submitting}
+          color='secondary'
+          fullWidth
+        >
+          {submitting ? "In progress…" : "Log in"}
+        </Button>
+        <Typography className={classes.comment}>
+          Have not account yet?
+          <Link
+            className={classes.commentLink}
+            href='/register'
+            color='inherit'
+          >
+            SIGN UP
+          </Link>
+        </Typography>
       </form>
-    );
-  }
-}
+    </Container>
+  );
+};
 
-LoginForm = reduxForm({
+export default reduxForm({
   form: "login",
   validate,
 })(LoginForm);
-
-export default LoginForm;

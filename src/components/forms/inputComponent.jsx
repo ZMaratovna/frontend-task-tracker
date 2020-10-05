@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { InputLabel } from "@material-ui/core";
 import Input from "@material-ui/core/Input";
 const myInput = (props) => {
-  const { input, label, type, placeholder, meta } = props;
+  const { input, type, placeholder, meta } = props;
   return (
     <Fragment>
       <Input
@@ -13,7 +13,9 @@ const myInput = (props) => {
         placeholder={placeholder}
       />
 
-      {meta.error && meta.touched && <div>{meta.error}</div>}
+      {meta.error && meta.touched && (
+        <div style={{ color: "#f50057", fontSize: "12px" }}>{meta.error}</div>
+      )}
     </Fragment>
   );
 };

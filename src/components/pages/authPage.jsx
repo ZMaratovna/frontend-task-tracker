@@ -1,28 +1,29 @@
 import React from "react";
 import LoginForm from "../forms/authForm";
-import { API } from "../../API/api";
-
-class AuthPage extends React.Component {
-  submit = (formData) => {
-    this.props.authUser(formData);
-    console.log("sunmit auth form");
+import Box from "@material-ui/core/Box";
+import Image from "../../img/good_team.svg";
+import { useHistory } from "react-router-dom";
+const AuthPage = (props) => {
+  let history = useHistory();
+  const submit = (formData) => {
+    props.authUser(formData);
   };
-
-  render() {
-    {
-      return !this.props.isLoggedIn ? (
-        <div>
-          <LoginForm onSubmit={this.submit} />
-          <span>
-            If you have an account, sign in; if you don't –{" "}
-            <a href='/register'>register.</a>
-          </span>
-        </div>
-      ) : (
-        (window.location.href = "/projects")
-      );
-    }
-  }
-}
+  return !props.isLoggedIn ? (
+    <Box
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100vh",
+        width: "100vw",
+        backgroundImage: `url(${Image})`,
+      }}
+    >
+      <LoginForm onSubmit={submit} />
+    </Box>
+  ) : (
+    history.push("/projects")
+  );
+};
 
 export default AuthPage;

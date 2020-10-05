@@ -10,12 +10,31 @@ import Avatar from "@material-ui/core/Avatar";
 const Header = (props) => {
   const useStyle = makeStyles((theme) => ({
     root: { flexGrow: 1 },
-    menuButton: { marginRight: theme.spacing(1) },
+    menuButton: {
+      margin: theme.spacing(1),
+      height: "50%",
+      alignSelf: "center",
+    },
     title: {
       flexGrow: 1,
     },
     avatar: {
       backgroundColor: "rgba(255, 136, 0, 1)",
+      alignSelf: "center",
+      justifySelf: "center",
+    },
+    userBox: {
+      display: "flex",
+    },
+    userInfo: {
+      display: "flex",
+      flexDirection: "column",
+      padding: "10px",
+    },
+    userName: {
+      fontSize: "12px",
+      textAlign: "center",
+      padding: "5px",
     },
   }));
   const classes = useStyle();
@@ -31,11 +50,18 @@ const Header = (props) => {
               <Typography variant='h6' className={classes.title}>
                 Task Tracker
               </Typography>
-              <Box>
+              <Box className={classes.userBox}>
+                <Box className={classes.userInfo}>
+                  <Avatar className={classes.avatar}>
+                    {props.position[0]}
+                  </Avatar>
+                  <span className={classes.userName}>{props.userName}</span>
+                </Box>
                 <Button
                   className={classes.menuButton}
                   variant='outlined'
                   color='inherit'
+                  size='small'
                   onClick={async (e) => {
                     e.preventDefault();
                     props.logout();
@@ -43,12 +69,6 @@ const Header = (props) => {
                 >
                   Log Out
                 </Button>
-                <Box>
-                  <Avatar className={classes.avatar}>
-                    {props.position[0]}
-                  </Avatar>
-                  {props.userName}
-                </Box>
               </Box>
             </Toolbar>
           </Container>

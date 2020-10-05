@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Field, reduxForm } from "redux-form";
 import { validate } from "../../utils/formValidation";
 import myInput from "./inputComponent";
@@ -13,12 +13,9 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const RegistrationForm = (props) => {
   const { handleSubmit, pristine, reset, submitting } = props;
+  const [isRegister, setIsRegister] = useState(false);
   const useStyles = makeStyles((theme) => ({
-    root: {
-      width: "400px",
-    },
     field: {
-      // padding: theme.spacing(3),
       marginBottom: "10px",
       height: "70px",
       textAlign: "center",
@@ -43,6 +40,11 @@ const RegistrationForm = (props) => {
     },
     form: {
       width: "70%",
+    },
+    submitMessage: {
+      fontSize: "20px",
+      color: "#3f51b5",
+      fontWeight: "600",
     },
   }));
 
@@ -78,63 +80,79 @@ const RegistrationForm = (props) => {
 
   return (
     <Container className={classes.formWrapper}>
-      <form className={classes.form} onSubmit={handleSubmit}>
-        <div>
-          <Field
-            className={classes.field}
-            id='username'
-            name='username'
-            type='text'
-            label='Full name'
-            placeholder='Full name'
-            component={myInput}
-          />
+      {!isRegister ? (
+        <form
+          className={classes.form}
+          onSubmit={() => {
+            handleSubmit();
+            console.log("submit");
+            setIsRegister(true);
+          }}
+        >
+          <div>
+            <Field
+              className={classes.field}
+              id='username'
+              name='username'
+              type='text'
+              label='Full name'
+              placeholder='Full name'
+              component={myInput}
+            />
+          </div>
+          <div>
+            <Field
+              name='email'
+              component={myInput}
+              className={classes.field}
+              id='email'
+              label='Email'
+              type='text'
+              placeholder='Email'
+            />
+          </div>
+          <div>
+            <Field
+              name='password'
+              className={classes.field}
+              id='password'
+              type='password'
+              label='Password'
+              placeholder='Password'
+              component={myInput}
+            />
+          </div>
+          <div>
+            <Field name='position' component={renderRadioGroup}></Field>
+          </div>
+          <div>
+            <Button
+              type='submit'
+              variant='contained'
+              className={classes.button}
+              disabled={submitting}
+              color='secondary'
+              fullWidth
+            >
+              {submitting ? "In progress…" : "Sign Up"}
+            </Button>
+            <Button
+              type='button'
+              fullWidth
+              disabled={pristine || submitting}
+              onClick={reset}
+            >
+              Clear Values
+            </Button>
+          </div>
+        </form>
+      ) : (
+        <div className={classes.submitMessage}>
+          <Typography>
+            We sent you a email. Please, confirm your email address!
+          </Typography>
         </div>
-        <div>
-          <Field
-            name='email'
-            component={myInput}
-            className={classes.field}
-            id='email'
-            label='Email'
-            type='text'
-            placeholder='Email'
-          />
-        </div>
-        <div>
-          <Field
-            name='password'
-            className={classes.field}
-            id='password'
-            type='password'
-            label='Password'
-            placeholder='Password'
-            component={myInput}
-          />
-        </div>
-        <div>
-          <Field name='position' component={renderRadioGroup}></Field>
-        </div>
-        <div>
-          <Button
-            variant='contained'
-            className={classes.button}
-            disabled={submitting}
-            color='secondary'
-            fullWidth
-          >
-            {submitting ? "In progress…" : "Sign Up"}
-          </Button>
-          <Button
-            type='button'
-            fullWidth
-            disabled={pristine || submitting}
-            onClick={reset}
-          >
-            Clear Values
-          </Button>
-        </div>
-      </form>
+      )}
     </Container>
   );
 };

@@ -17,6 +17,7 @@ import {
 
 document.addEventListener("DOMContentLoaded", () => {
   const token = localStorage.getItem("jwtToken");
+
   const store = configureStore();
   //Check for token
   if (token) {

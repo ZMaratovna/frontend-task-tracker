@@ -1,7 +1,4 @@
 import React from "react";
-import UserGreeting from "../UserGreeting";
-import GuestGreeting from "../GuestGreeting";
-import styles from "./register.module.css";
 import RegistrationForm from "../forms/registrationForm";
 import Box from "@material-ui/core/Box";
 import Image from "../../img/good_team.svg";

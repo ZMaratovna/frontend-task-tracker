@@ -1,21 +1,32 @@
 import React from "react";
 import TaskList from "../Tasks/TaskList";
+import Container from "@material-ui/core/Container";
+import { Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
-class Project extends React.Component {
-  render() {
-    if (this.props.project) {
-      return (
-        <div>
-          <h1>{this.props.project.name}</h1>
-          <p>{this.props.project.content}</p>
-          <h2>Tasks</h2>
-          <TaskList {...this.props} />
-        </div>
-      );
-    } else {
-      return <div></div>;
-    }
+const Project = (props) => {
+  const useStyles = makeStyles((theme) => ({
+    Container: {
+      margin: "94px auto",
+      textAlign: "center",
+    },
+  }));
+
+  const classes = useStyles();
+  if (props.project) {
+    return (
+      <Container className={classes.Container}>
+        <Typography variant='h2' component='h1'>
+          {props.project.name}
+        </Typography>
+        <Typography component='p'>{props.project.content}</Typography>
+        <Typography variant='h4'>Tasks</Typography>
+        <TaskList {...props} />
+      </Container>
+    );
+  } else {
+    return <div>Loading...</div>;
   }
-}
+};
 
 export default Project;

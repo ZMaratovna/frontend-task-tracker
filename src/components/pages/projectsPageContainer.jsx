@@ -9,13 +9,6 @@ import {
 import { connect } from "react-redux";
 
 class ProjectsPageContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      projects: [],
-    };
-  }
-
   async componentDidMount() {
     await this.props.getProjectsThunk(this.props.userId);
   }
