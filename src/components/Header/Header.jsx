@@ -1,43 +1,20 @@
 import React from "react";
 import { AppBar, Container, Toolbar, Typography } from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
-import Button from "@material-ui/core/Button";
+
 import { IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+
+import MenuIcon from "@material-ui/icons/Menu";
+import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import Avatar from "@material-ui/core/Avatar";
 
+import styles from "../../styles/components/header/headerStyle.js";
+
 const Header = (props) => {
-  const useStyle = makeStyles((theme) => ({
-    root: { flexGrow: 1 },
-    menuButton: {
-      margin: theme.spacing(1),
-      height: "50%",
-      alignSelf: "center",
-    },
-    title: {
-      flexGrow: 1,
-    },
-    avatar: {
-      backgroundColor: "rgba(255, 136, 0, 1)",
-      alignSelf: "center",
-      justifySelf: "center",
-    },
-    userBox: {
-      display: "flex",
-    },
-    userInfo: {
-      display: "flex",
-      flexDirection: "column",
-      padding: "10px",
-    },
-    userName: {
-      fontSize: "12px",
-      textAlign: "center",
-      padding: "5px",
-    },
-  }));
+  const useStyle = makeStyles(styles);
   const classes = useStyle();
+
   return (
     <div>
       {props.isLoggedIn ? (

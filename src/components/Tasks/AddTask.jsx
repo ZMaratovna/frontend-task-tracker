@@ -5,32 +5,16 @@ import Fab from "@material-ui/core/Fab";
 import { Typography, Box } from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import Input from "@material-ui/core/Input";
+import styles from "../../styles/components/task/addTaskStyle.js";
 
 const AddTask = (props) => {
   const [editMode, setEditMode] = useState(false);
   const [newName, setNewName] = useState({});
   const [newContent, setNewContent] = useState({});
 
-  const useStyles = makeStyles((theme) => ({
-    buttonBlock: {
-      display: "flex",
-      justifyContent: "flex-end",
-      alignItems: "center",
-    },
-    buttonText: {
-      alignSelf: "center",
-      marginRight: "10px",
-    },
-    addTaskBox: {
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "spaceBetween",
-      alignSelf: "center",
-      width: "50%",
-    },
-  }));
-
+  const useStyles = makeStyles(styles);
   const classes = useStyles();
+
   return (
     <Container>
       {!editMode ? (

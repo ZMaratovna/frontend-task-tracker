@@ -3,19 +3,14 @@ import TaskList from "../Tasks/TaskList";
 import Container from "@material-ui/core/Container";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-
+import styles from "../../styles/components/project/styles.js";
 const Project = (props) => {
-  const useStyles = makeStyles((theme) => ({
-    Container: {
-      margin: "94px auto",
-      textAlign: "center",
-    },
-  }));
+  const useStyles = makeStyles(styles);
 
   const classes = useStyles();
   if (props.project) {
     return (
-      <Container className={classes.Container}>
+      <Container className={classes.ProjectContainer}>
         <Typography variant='h2' component='h1'>
           {props.project.name}
         </Typography>

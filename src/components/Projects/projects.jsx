@@ -1,23 +1,9 @@
-import React, { useState } from "react";
-
+import React from "react";
 import { Container, makeStyles, List } from "@material-ui/core";
 import ProjectItem from "./ProjectItem";
+import styles from "../../styles/pages/projectStyle.js";
 const Projects = (props) => {
-  const useStyle = makeStyles((theme) => ({
-    root: {
-      width: "100%",
-      backgroundColor: theme.palette.background.paper,
-    },
-    listWrapper: {
-      width: "100%",
-      alignSelf: "center",
-      textAlign: "left",
-    },
-    button: {
-      height: "50%",
-      alignSelf: "center",
-    },
-  }));
+  const useStyle = makeStyles(styles);
   const classes = useStyle();
   return (
     <Container className={classes.root}>

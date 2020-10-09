@@ -1,32 +1,11 @@
 import React from "react";
 import { Container, Paper } from "@material-ui/core";
-
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
-import Image from "../../img/good_team.svg";
+import styles from "../../styles/pages/SplashStyle.js";
+
 const SplashPage = (props) => {
-  const useStyle = makeStyles((theme) => ({
-    paperContainer: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      flexGrow: 1,
-      height: "100vh",
-      backgroundImage: `url(${Image})`,
-      backgroundPosition: "center center",
-      backgroundSize: "contain",
-      backgroundAttachment: "fixed",
-    },
-    titleContainer: {
-      backgroundColor: "rgba(255, 255, 255, 0.6)",
-      width: "100%",
-    },
-    title: {
-      textAlign: "center",
-      padding: "20px",
-    },
-  }));
+  const useStyle = makeStyles(styles);
   const classes = useStyle();
   return (
     <Container>

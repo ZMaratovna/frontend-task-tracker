@@ -14,14 +14,10 @@ const AssignTo = (props) => {
             }}
             onChange={async (e) => {
               const index = e.target.selectedIndex;
-
               const devId = e.target.options[index].id;
-              console.log("devId", devId);
-
               const devname = e.target.options[index].value;
               props.setDeveloper(devname);
               {
-                console.log("devId in asiign component", devId);
                 props.isProject
                   ? await props.assignProject(
                       { devId, devname },

@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import moment from "moment";
 
 import AssignTo from "./AssignTo";
 
@@ -25,8 +23,9 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 
+import styles from "../../styles/components/task/taskStyle.js";
+
 const TaskItem = (props) => {
-  let history = useHistory();
   let executor = props.data.executor;
   if (executor) {
     executor = props.developers.find((dev) => dev._id === executor).username;
@@ -41,30 +40,7 @@ const TaskItem = (props) => {
   const [editStatus, setEditStatus] = useState(false);
   const [developer, setDeveloper] = useState(executor);
 
-  const useStyles = makeStyles((theme) => ({
-    status: {
-      textAlign: "center",
-      fontSize: "10px",
-      backgroundColor: "rgba(245, 0, 87, 0.2)",
-      width: "100px",
-      color: "rgba(245, 0, 87, 1)",
-      padding: "6px",
-      borderRadius: "4px",
-    },
-    head: {
-      backgroundColor: "#3f51b5",
-    },
-    headTitle: {
-      color: "#fff",
-      alignSelf: "center",
-    },
-    headGroup: {
-      width: "100%",
-      display: "flex",
-      justifyContent: "center",
-      textAlign: "center",
-    },
-  }));
+  const useStyles = makeStyles(styles);
   const classes = useStyles();
 
   if (props.position === "manager") {
@@ -74,8 +50,8 @@ const TaskItem = (props) => {
           <Table aria-label='simple table'>
             <TableHead className={classes.head}>
               <TableRow>
-                <TableCell>
-                  {props.data.name}
+                <TableCell className={classes.taskControl}>
+                  <Box className={classes.taskTitle}>{props.data.name}</Box>
                   <ButtonGroup>
                     <ListItemIcon button>
                       <Edit
@@ -259,14 +235,6 @@ const TaskItem = (props) => {
         </TableContainer>
       </ListItem>
     );
-
-    {
-      /* <div>
-          <a onClick={() => history.push(`/comments/${props.data._id}`)}>
-            Comments: {props.data.comments.length}
-          </a>
-        </div> */
-    }
   }
 };
 export default TaskItem;

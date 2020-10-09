@@ -4,7 +4,6 @@ import Box from "@material-ui/core/Box";
 import Image from "../../img/good_team.svg";
 import { useHistory } from "react-router-dom";
 const AuthPage = (props) => {
-  console.log("authpageprops", props);
   let history = useHistory();
   const submit = (formData) => {
     props.authUser(formData);

@@ -5,40 +5,20 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 import DeleteIcon from "@material-ui/icons/DeleteOutlined";
 import AssignIcon from "@material-ui/icons/AssignmentInd";
-import DevIcon from "@material-ui/icons/AccountCircle";
 import Edit from "@material-ui/icons/Edit";
 import ListItem from "@material-ui/core/ListItem";
 import TextField from "@material-ui/core/TextField";
 import AssignTo from "../Tasks/AssignTo";
+import Box from "@material-ui/core/Box";
+import styles from "../../styles/components/project/styles.js";
 
 const ProjectItem = (props) => {
-  console.log("ProjectItem props", props);
-  const developers = props.developres
-    ? props.developers
-        .filter((dev) => dev.projects.includes(props.project._id))
-        .map((dev) => dev.username)
-    : "undefined";
-  console.log("developers", developers);
   const history = useHistory();
   const [editProject, setEditProject] = useState(false);
   const [assign, setAssign] = useState(null);
-  const [developer, setDeveloper] = useState(null);
+  const [developer, setDeveloper] = useState("");
 
-  const useStyle = makeStyles((theme) => ({
-    listItem: {
-      borderBottom: "2px solid #3f51b5",
-      display: "flex",
-      justifyContent: "space-between",
-      borderRadius: "4px",
-      padding: "10px",
-      listStyleType: "none",
-    },
-
-    button: {
-      height: "50%",
-      alignSelf: "center",
-    },
-  }));
+  const useStyle = makeStyles(styles);
   const classes = useStyle();
   return (
     <ListItem key={props.index} className={classes.listItem}>
@@ -68,16 +48,26 @@ const ProjectItem = (props) => {
                 assignProject={props.assignProject}
               />
             ) : (
-              <Typography>
-                Developers:
-                {props.developers ? (
-                  props.developers
-                    .filter((dev) => dev.projects.includes(props.project._id))
-                    .map((dev) => dev.username)
-                ) : (
-                  <div>0</div>
-                )}
-              </Typography>
+              <Box>
+                <Typography variant='h6'> Developers:</Typography>
+                <Typography>
+                  {" "}
+                  {props.developers ? (
+                    <div>
+                      {props.developers
+                        .filter((dev) =>
+                          dev.projects.includes(props.project._id)
+                        )
+                        .map((dev) => dev.username)
+                        .join(", ") +
+                        ", " +
+                        developer}
+                    </div>
+                  ) : (
+                    <div>Can't find anyone</div>
+                  )}
+                </Typography>
+              </Box>
             )}
           </div>
         )}

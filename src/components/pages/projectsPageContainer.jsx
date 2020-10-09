@@ -12,9 +12,9 @@ import { connect } from "react-redux";
 import { getDevelopersThunk } from "../../actions/user.actions";
 
 class ProjectsPageContainer extends React.Component {
-  async componentDidMount() {
-    await this.props.getProjectsThunk(this.props.userId);
-    await this.props.getDevelopersThunk();
+  componentDidMount() {
+    this.props.getProjectsThunk(this.props.userId);
+    this.props.getDevelopersThunk();
   }
 
   render() {

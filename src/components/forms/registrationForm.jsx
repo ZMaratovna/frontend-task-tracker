@@ -10,43 +10,12 @@ import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import styles from "../../styles/components/forms/RegisterStyle.js";
 
 const RegistrationForm = (props) => {
   const { handleSubmit, pristine, reset, submitting } = props;
   const [isRegister, setIsRegister] = useState(false);
-  const useStyles = makeStyles((theme) => ({
-    field: {
-      marginBottom: "10px",
-      height: "70px",
-      textAlign: "center",
-      color: theme.palette.text.secondary,
-    },
-    formWrapper: {
-      display: "flex",
-      justifyContent: "center",
-      padding: "50px 20px",
-      width: "400px",
-      border: "1px solid #3f51b5",
-      borderRadius: "10px",
-      boxShadow: "1px 1px 2px #3f51b5",
-      backgroundColor: "rgba(255,255,255,0.9)",
-    },
-    label: {
-      color: "rgba(100, 100, 100, 1)",
-    },
-    FormControl: {
-      marginTop: "30px",
-      marginBottom: "20px",
-    },
-    form: {
-      width: "70%",
-    },
-    submitMessage: {
-      fontSize: "20px",
-      color: "#3f51b5",
-      fontWeight: "600",
-    },
-  }));
+  const useStyles = makeStyles(styles);
 
   const classes = useStyles();
 

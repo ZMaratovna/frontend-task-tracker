@@ -3,7 +3,6 @@ import Header from "./Header";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/session.actions";
 const HeaderContainer = (props) => {
-  console.log("header  container props", props.isLoggedIn);
   return (
     <Header
       isLoggedIn={props.isLoggedIn}
