@@ -42,23 +42,39 @@ export const API = {
       `${baseURL}projects/add/${userId}`,
       projectData
     );
+    return response.data;
+  },
+  async assignProject(devId, projectId) {
+    console.log("assign request", devId);
+    const response = await axios.post(
+      `${baseURL}projects/assign/${projectId}`,
+      {
+        developer: devId,
+      }
+    );
     console.log(response.data);
     return response.data;
   },
-  async assignProject(projectData) {
-    const response = await axios.post(`${baseURL}projects/assign`, projectData);
-    console.log(response.data);
-    return response;
-  },
   async getUserProjects(userId) {
     const response = await axios.get(`${baseURL}users/projects/${userId}`);
-    console.log(response.data);
     return response.data;
   },
   async getProject(projectId) {
     const response = await axios.get(`${baseURL}projects/${projectId}`);
     console.log(response.data);
     return response.data[0];
+  },
+  async deleteProject(projectId) {
+    const response = await axios.delete(`${baseURL}projects/${projectId}`);
+    return response.data;
+  },
+  async editProject(projectId, projectData) {
+    console.log(projectData);
+    const response = await axios.post(`${baseURL}projects/${projectId}`, {
+      content: projectData,
+    });
+    console.log(response.data);
+    return response.data;
   },
 
   //Tasks
@@ -67,27 +83,26 @@ export const API = {
       `${baseURL}tasks/add/${projectId}`,
       taskData
     );
-    console.log(response.data);
+
     return response.data;
   },
   async getDevelopers() {
     const response = await axios.get(`${baseURL}users/`);
-    console.log("get developers response", response.data);
+
     return response.data;
   },
   async geUserTasks(userId) {
     const response = await axios.get(`${baseURL}tasks/${userId}`);
-    console.log("api getIserTasks response", response.data);
+
     return response.data;
   },
   async getProjectTasks(projectId) {
     const response = await axios.get(`${baseURL}tasks/project/${projectId}`);
-    console.log("project tasks =", response.data);
+
     return response.data;
   },
   async deleteTask(taskId) {
     const response = await axios.delete(`${baseURL}tasks/${taskId}`);
-    console.log("delete task response from api ", response.data);
     return response;
   },
   async editTask(taskId, taskData) {
@@ -102,7 +117,6 @@ export const API = {
       `${baseURL}tasks/assign/${taskId}`,
       developer
     );
-    console.log("assigned task", response.data);
     return response.data;
   },
   async changeStatus(taskId, status) {

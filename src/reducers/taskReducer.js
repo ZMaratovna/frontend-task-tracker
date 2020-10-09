@@ -38,7 +38,6 @@ const taskReducer = (state = initialState, action) => {
     }
 
     case DELETE_TASK: {
-      console.log("action.task._id ", action.task._id);
       return Object.assign({}, state, {
         projectTasks: state.projectTasks.filter(
           (task) => task._id !== action.task._id

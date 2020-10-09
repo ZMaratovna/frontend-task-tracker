@@ -1,18 +1,17 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import "./index.css";
 import App from "./App";
 import configureStore from "./store/store";
 import { API } from "./API/api";
-import jwt from "jsonwebtoken";
+
 import jwt_decode from "jwt-decode";
 import {
-  setCurrentUser,
   logoutUser,
   authSuccess,
-  authUser,
+  invalidTokenThunk,
 } from "./actions/session.actions";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -35,6 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       store.dispatch(authSuccess(token));
     }
+  } else {
+    store.dispatch(invalidTokenThunk());
   }
 
   ReactDOM.render(

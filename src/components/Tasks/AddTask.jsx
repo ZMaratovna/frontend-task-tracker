@@ -61,6 +61,7 @@ const AddTask = (props) => {
               onClick={() => {
                 props.addTask(props.projectId, {
                   name: newName,
+                  userId: props.userId,
                   content: newContent,
                 });
                 setEditMode(false);

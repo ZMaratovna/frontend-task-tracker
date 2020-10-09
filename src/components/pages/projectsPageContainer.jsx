@@ -1,16 +1,20 @@
 import React from "react";
-import ProjectsPage from "./projects.page";
+import ProjectsPage from "./projectsPage";
 import {
   getProjectThunk,
   getProjectsThunk,
   addProjectThunk,
+  editProjectThunk,
+  deleteProjectThunk,
   assignProjectThunk,
 } from "../../actions/project.actions";
 import { connect } from "react-redux";
+import { getDevelopersThunk } from "../../actions/user.actions";
 
 class ProjectsPageContainer extends React.Component {
   async componentDidMount() {
     await this.props.getProjectsThunk(this.props.userId);
+    await this.props.getDevelopersThunk();
   }
 
   render() {
@@ -20,7 +24,10 @@ class ProjectsPageContainer extends React.Component {
         userId={this.props.userId}
         addProject={this.props.addProjectThunk}
         getProject={this.props.getProjectThunk}
+        editProject={this.props.editProjectThunk}
         assignProject={this.props.assignProjectThunk}
+        deleteProject={this.props.deleteProjectThunk}
+        developers={this.props.developers}
       />
     );
   }
@@ -29,6 +36,7 @@ class ProjectsPageContainer extends React.Component {
 const mapStateToProps = (state) => ({
   projects: state.Projects.projects,
   userId: state.Session.id,
+  developers: state.User.developers,
 });
 
 ProjectsPageContainer = connect(mapStateToProps, {
@@ -36,6 +44,9 @@ ProjectsPageContainer = connect(mapStateToProps, {
   getProjectThunk,
   addProjectThunk,
   assignProjectThunk,
+  editProjectThunk,
+  deleteProjectThunk,
+  getDevelopersThunk,
 })(ProjectsPageContainer);
 
 export default ProjectsPageContainer;

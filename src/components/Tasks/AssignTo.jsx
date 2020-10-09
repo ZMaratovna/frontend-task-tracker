@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 
 const AssignTo = (props) => {
-  const developers = props.developers;
   const [editMode, setEditMode] = useState(true);
-  const [developer, setDev] = useState("");
 
   return (
     <div>
@@ -18,11 +16,19 @@ const AssignTo = (props) => {
               const index = e.target.selectedIndex;
 
               const devId = e.target.options[index].id;
+              console.log("devId", devId);
 
               const devname = e.target.options[index].value;
               props.setDeveloper(devname);
-
-              await props.assignTask({ devId, devname }, props.taskId);
+              {
+                console.log("devId in asiign component", devId);
+                props.isProject
+                  ? await props.assignProject(
+                      { devId, devname },
+                      props.projectId
+                    )
+                  : await props.assignTask({ devId, devname }, props.taskId);
+              }
             }}
           >
             <option></option>

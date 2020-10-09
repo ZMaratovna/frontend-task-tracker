@@ -14,7 +14,11 @@ const TaskList = (props) => {
     return (
       <Container>
         <Typography variant='h3'>no tasks yet...Add first task!</Typography>
-        <AddTask projectId={props.projectId} addTask={props.addTask} />
+        <AddTask
+          userId={props.userId}
+          projectId={props.projectId}
+          addTask={props.addTask}
+        />
       </Container>
     );
   } else {
@@ -34,19 +38,21 @@ const TaskList = (props) => {
         {filterMode ? (
           <List>
             {userTasks.map((task) => {
-              console.log(props);
               return <TaskItem {...props} data={task} />;
             })}
           </List>
         ) : (
           <List>
             {props.tasks.map((task) => {
-              console.log(props);
               return <TaskItem {...props} data={task} />;
             })}
           </List>
         )}
-        <AddTask projectId={props.projectId} addTask={props.addTask} />
+        <AddTask
+          userId={props.userId}
+          projectId={props.projectId}
+          addTask={props.addTask}
+        />
       </Container>
     );
   }

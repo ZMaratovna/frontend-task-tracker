@@ -1,28 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Container, makeStyles, Typography, List } from "@material-ui/core";
+import { makeStyles, Typography } from "@material-ui/core";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
-
+import DeleteIcon from "@material-ui/icons/DeleteOutlined";
+import AssignIcon from "@material-ui/icons/AssignmentInd";
+import DevIcon from "@material-ui/icons/AccountCircle";
+import Edit from "@material-ui/icons/Edit";
 import ListItem from "@material-ui/core/ListItem";
+import TextField from "@material-ui/core/TextField";
+import AssignTo from "../Tasks/AssignTo";
 
-export default function ProjectItem(props) {
+const ProjectItem = (props) => {
+  console.log("ProjectItem props", props);
+  const developers = props.developres
+    ? props.developers
+        .filter((dev) => dev.projects.includes(props.project._id))
+        .map((dev) => dev.username)
+    : "undefined";
+  console.log("developers", developers);
   const history = useHistory();
-
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
-  const handleListItemClick = (event, index) => {
-    setSelectedIndex(index);
-  };
+  const [editProject, setEditProject] = useState(false);
+  const [assign, setAssign] = useState(null);
+  const [developer, setDeveloper] = useState(null);
 
   const useStyle = makeStyles((theme) => ({
-    root: {
-      width: "100%",
-      backgroundColor: theme.palette.background.paper,
-    },
-    listWrapper: {
-      width: "100vw",
-      alignSelf: "center",
-      textAlign: "left",
-    },
     listItem: {
       borderBottom: "2px solid #3f51b5",
       display: "flex",
@@ -39,33 +41,85 @@ export default function ProjectItem(props) {
   }));
   const classes = useStyle();
   return (
-    <Container className={classes.root}>
-      <List className={classes.listWrapper}>
-        {props.projects.map((project, index) => (
-          <ListItem
-            key={project._id}
-            className={classes.listItem}
-            selected={selectedIndex === index}
-            onClick={(event) => handleListItemClick(event, index)}
-          >
-            <div>
-              <Typography variant='h6'>{project.name}</Typography>
-              <Typography variant='body1'>{project.content}</Typography>
-            </div>
-            <Button
-              className={classes.button}
-              variant='outlined'
-              color='secondary'
-              onClick={() => {
-                props.getProject(project._id);
-                history.push(`/projects/${project._id}`);
-              }}
-            >
-              more details
-            </Button>
-          </ListItem>
-        ))}
-      </List>
-    </Container>
+    <ListItem key={props.index} className={classes.listItem}>
+      <div>
+        <Typography variant='h6'>{props.project.name}</Typography>
+        {editProject ? (
+          <TextField
+            multiline
+            variant='outlined'
+            defaultValue={props.project.content}
+            onBlur={async (e) => {
+              console.log("textarea value", e.target.value);
+              await props.editProject(props.project._id, e.target.value);
+              setEditProject(false);
+            }}
+          ></TextField>
+        ) : (
+          <div>
+            <Typography variant='body1'>{props.project.content}</Typography>
+            {assign ? (
+              <AssignTo
+                developers={props.developers}
+                projectId={props.project._id}
+                setAssign={setAssign}
+                setDeveloper={setDeveloper}
+                isProject={true}
+                assignProject={props.assignProject}
+              />
+            ) : (
+              <Typography>
+                Developers:
+                {props.developers ? (
+                  props.developers
+                    .filter((dev) => dev.projects.includes(props.project._id))
+                    .map((dev) => dev.username)
+                ) : (
+                  <div>0</div>
+                )}
+              </Typography>
+            )}
+          </div>
+        )}
+        <Button
+          className={classes.button}
+          color='secondary'
+          variant='text'
+          onClick={() => {
+            props.getProject(props.project._id);
+            history.push(`/projects/${props.project._id}`);
+          }}
+        >
+          more details
+        </Button>
+      </div>
+      <ButtonGroup
+        size='small'
+        orientation='vertical'
+        color='primary'
+        aria-label='vertical contained primary button group'
+        variant='text'
+      >
+        <Button>
+          <Edit onClick={() => setEditProject(true)} />
+        </Button>
+        <Button>
+          <AssignIcon
+            onClick={() => {
+              setAssign(true);
+            }}
+          />
+        </Button>
+        <Button>
+          <DeleteIcon
+            onClick={() => {
+              props.deleteProject(props.project._id);
+            }}
+          />
+        </Button>
+      </ButtonGroup>
+    </ListItem>
   );
-}
+};
+
+export default ProjectItem;

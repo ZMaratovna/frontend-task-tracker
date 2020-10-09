@@ -6,12 +6,14 @@ import { authUser } from "../../actions/session.actions";
 
 class AuthPageContainer extends React.Component {
   render() {
+    console.log("auth_container props", this.props);
     return (
       <>
         <AuthPage
           authSuccess={this.props.authSuccess}
           authUser={this.props.authUser}
           isLoggedIn={this.props.isLoggedIn}
+          error={this.props.authError}
         />
       </>
     );
@@ -21,6 +23,7 @@ class AuthPageContainer extends React.Component {
 const mapStateToProps = (state) => {
   return {
     isLoggedIn: Boolean(state.Session.id),
+    authError: state.Session.authError,
   };
 };
 

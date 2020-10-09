@@ -10,6 +10,7 @@ import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
 
 const LoginForm = (props) => {
+  console.log("authprops", props);
   const { handleSubmit, submitting } = props;
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,6 +24,7 @@ const LoginForm = (props) => {
     },
     formWrapper: {
       display: "flex",
+      flexDirection: "column",
       justifyContent: "center",
       padding: "50px 20px",
       width: "400px",
@@ -49,11 +51,20 @@ const LoginForm = (props) => {
     button: {
       marginTop: "20px",
     },
+    error: {
+      fontSize: "12px",
+      color: "#f50057",
+    },
   }));
 
   const classes = useStyles();
   return (
     <Container className={classes.formWrapper}>
+      {props.authError ? (
+        <div className={classes.error}>{props.authError}</div>
+      ) : (
+        <div></div>
+      )}
       <form onSubmit={handleSubmit}>
         <Field
           className={classes.field}

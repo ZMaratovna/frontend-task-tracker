@@ -1,5 +1,5 @@
 import { API } from "../API/api";
-import jwt from "jsonwebtoken";
+
 import jwt_decode from "jwt-decode";
 
 export const RECEIVE_CURRENT_USER = "RECEIVE_CURRENT_USER";
@@ -8,12 +8,17 @@ export const RECEIVE_SESSION_ERRORS = "RECEIVE_SESSION_ERRORS";
 export const GET_ERRORS = "GET_ERRORS";
 export const REGISTER = "REGISTER";
 export const REMOVE_SESSION_ERRORS = "REMOVE_SESSION_ERRORS";
+export const INVALID_TOKEN = "INVALID_TOKEN";
+export const invalidTokenThunk = () => (dispatch) => {
+  localStorage.removeItem("jwtToken");
+  dispatch(invalidToken());
+};
 
-// export const receiveCurrentUser = (payload) => ({
-//   type: RECEIVE_CURRENT_USER,
-//   payload,
-// });
-
+export const invalidToken = () => {
+  return {
+    type: INVALID_TOKEN,
+  };
+};
 export const logoutCurrentUser = () => ({
   type: LOGOUT_CURRENT_USER,
 });
@@ -38,10 +43,14 @@ export const authUser = (userData) => (dispatch) =>
   API.auth(userData).then(
     (res) => {
       const token = res.data;
-      localStorage.setItem("jwtToken", token);
-      API.setAuthToken(token);
-      const decoded = jwt_decode(token, "Secret");
-      dispatch(setCurrentUser(decoded));
+      if (token === "Incorrect email or password") {
+        dispatch(invalidToken());
+      } else {
+        localStorage.setItem("jwtToken", token);
+        API.setAuthToken(token);
+        const decoded = jwt_decode(token, "Secret");
+        dispatch(setCurrentUser(decoded));
+      }
     },
     (err) =>
       dispatch({

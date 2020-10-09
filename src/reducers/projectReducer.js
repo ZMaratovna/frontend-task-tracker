@@ -3,6 +3,8 @@ import {
   GET_PROJECT,
   GET_PROJECTS,
   ASSIGN_PROJECT,
+  EDIT_PROJECT,
+  DELETE_PROJECT,
 } from "../actions/project.actions";
 
 let initialState = {
@@ -23,17 +25,40 @@ const ProjectsReducer = (state = initialState, action) => {
         ...state,
         current: action.project,
       };
-    case GET_PROJECTS:
+    case GET_PROJECTS: {
       return { ...state, projects: [...action.projects] };
-
+    }
     case ASSIGN_PROJECT: {
-      return {
-        ...state,
-        executors: [
-          ...state.executors,
-          { developerId: action.executor, projectId: action.project },
-        ],
-      };
+      return Object.assign({}, state, {
+        projects: state.projects.map((project) => {
+          if (project._id === action.projectId) {
+            return Object.assign({}, project, {
+              developers: [...project.developers, action.executor],
+            });
+          }
+          return project;
+        }),
+      });
+    }
+
+    case EDIT_PROJECT: {
+      return Object.assign({}, state, {
+        projects: state.projects.map((project) => {
+          if (project._id === action.project._id) {
+            return Object.assign({}, project, {
+              content: action.project.content,
+            });
+          }
+          return project;
+        }),
+      });
+    }
+    case DELETE_PROJECT: {
+      return Object.assign({}, state, {
+        projects: state.projects.filter(
+          (project) => project._id !== action.project._id
+        ),
+      });
     }
     default:
       return state;

@@ -1,26 +1,32 @@
-import React from "react";
-import { Route, Switch } from "react-router-dom";
-import ProjectsPageContainer from "../pages/projectsPageContainer";
-import ProjectContainer from "./ProjectItem";
+import React, { useState } from "react";
 
+import { Container, makeStyles, List } from "@material-ui/core";
+import ProjectItem from "./ProjectItem";
 const Projects = (props) => {
+  const useStyle = makeStyles((theme) => ({
+    root: {
+      width: "100%",
+      backgroundColor: theme.palette.background.paper,
+    },
+    listWrapper: {
+      width: "100%",
+      alignSelf: "center",
+      textAlign: "left",
+    },
+    button: {
+      height: "50%",
+      alignSelf: "center",
+    },
+  }));
+  const classes = useStyle();
   return (
-    <>
-      <Switch>
-        <Route
-          exact
-          path='/projects'
-          component={<ProjectsPageContainer />}
-        ></Route>
-        <Route
-          path='/projects/:projectId'
-          component={
-            <ProjectContainer projectId={props.match.params.projectId} />
-          }
-        ></Route>
-      </Switch>
-    </>
+    <Container className={classes.root}>
+      <List className={classes.listWrapper}>
+        {props.projects.map((project, index) => (
+          <ProjectItem project={project} index={index} {...props} />
+        ))}
+      </List>
+    </Container>
   );
 };
-
 export default Projects;
