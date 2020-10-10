@@ -28,6 +28,15 @@ const TaskItemStyle = {
     color: "#fff",
     marginRight: "20px",
   },
+  textField: {
+    width: "100%",
+  },
+  filterContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
+    padding: "15px",
+  },
+  filterBtn: {},
 };
 
 export default TaskItemStyle;

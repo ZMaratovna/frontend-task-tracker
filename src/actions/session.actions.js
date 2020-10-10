@@ -14,9 +14,10 @@ export const invalidTokenThunk = () => (dispatch) => {
   dispatch(invalidToken());
 };
 
-export const invalidToken = () => {
+export const invalidToken = (payload) => {
   return {
     type: INVALID_TOKEN,
+    message: payload,
   };
 };
 export const logoutCurrentUser = () => ({
@@ -29,7 +30,13 @@ export const receiveErrors = (errors) => ({
 });
 
 export const registerUserThunk = (userData) => (dispatch) => {
-  API.postNewUser(userData).then((user) => dispatch(registerUser(user)));
+  API.postNewUser(userData).then((user) => {
+    if (user === "That user already exisits!") {
+      dispatch(invalidToken(user));
+    } else {
+      dispatch(registerUser(user));
+    }
+  });
 };
 
 export const registerUser = (payload) => {
@@ -44,7 +51,7 @@ export const authUser = (userData) => (dispatch) =>
     (res) => {
       const token = res.data;
       if (token === "Incorrect email or password") {
-        dispatch(invalidToken());
+        dispatch(invalidToken(token));
       } else {
         localStorage.setItem("jwtToken", token);
         API.setAuthToken(token);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { Field, reduxForm } from "redux-form";
 import { validate } from "../../utils/formValidation";
 import myInput from "./inputComponent";
@@ -13,35 +13,43 @@ import { makeStyles } from "@material-ui/core/styles";
 import styles from "../../styles/components/forms/RegisterStyle.js";
 
 const RegistrationForm = (props) => {
+  console.log(props);
   const { handleSubmit, pristine, reset, submitting } = props;
   const [isRegister, setIsRegister] = useState(false);
   const useStyles = makeStyles(styles);
 
   const classes = useStyles();
 
-  const renderRadioGroup = ({ input, ...rest }) => {
+  const renderRadioGroup = ({ input, meta }) => {
     return (
       <FormControl component='fieldset' className={classes.FormControl}>
         <RadioGroup
           aria-label='position'
           name='position'
           {...input}
-          {...rest}
+          {...meta}
           valueSelected={input.value}
           onChange={(event, value) => input.onChange(value)}
         >
-          <FormControlLabel
-            value='developer'
-            control={<Radio />}
-            label='developer'
-            className={classes.label}
-          />
-          <FormControlLabel
-            value='manager'
-            control={<Radio />}
-            label='manager'
-            className={classes.label}
-          />
+          <Fragment>
+            <FormControlLabel
+              value='developer'
+              control={<Radio />}
+              label='developer'
+              className={classes.label}
+            />
+            <FormControlLabel
+              value='manager'
+              control={<Radio />}
+              label='manager'
+              className={classes.label}
+            />
+            {meta.error && meta.touched && (
+              <div style={{ color: "#f50057", fontSize: "12px" }}>
+                {meta.error}
+              </div>
+            )}
+          </Fragment>
         </RadioGroup>
       </FormControl>
     );
@@ -117,9 +125,15 @@ const RegistrationForm = (props) => {
         </form>
       ) : (
         <div className={classes.submitMessage}>
-          <Typography>
-            We sent you a email. Please, confirm your email address!
-          </Typography>
+          {props.isSuccess && !props.error ? (
+            <Typography>
+              We sent you a email. Please, confirm your email address!
+            </Typography>
+          ) : (
+            <div>
+              <Typography>That user has already exist!</Typography>
+            </div>
+          )}
         </div>
       )}
     </Container>

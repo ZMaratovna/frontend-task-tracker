@@ -7,7 +7,6 @@ export const API = {
   //Registration and authentification
   async postNewUser(userData) {
     const response = await axios.post(`${baseURL}register`, userData);
-    console.log(response);
     return response.data;
   },
   async auth(authData) {

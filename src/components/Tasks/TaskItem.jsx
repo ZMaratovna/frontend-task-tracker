@@ -27,7 +27,7 @@ import styles from "../../styles/components/task/taskStyle.js";
 
 const TaskItem = (props) => {
   let executor = props.data.executor;
-  if (executor) {
+  if (executor && props.developers) {
     executor = props.developers.find((dev) => dev._id === executor).username;
     console.log("executor", executor);
   } else {
@@ -40,200 +40,124 @@ const TaskItem = (props) => {
   const [editStatus, setEditStatus] = useState(false);
   const [developer, setDeveloper] = useState(executor);
 
+  const handleContent = async (e) => {
+    setTaskContent(e.target.value);
+    await props.editTask(props.data._id, e.target.value);
+    setEditTask(false);
+  };
+  const handleStatus = async (e) => {
+    await props.setStatus(props.data._id, e.target.value);
+    setEditStatus(false);
+  };
+
   const useStyles = makeStyles(styles);
   const classes = useStyles();
 
   if (props.position === "manager") {
     return (
-      <ListItem>
-        <TableContainer component={Paper}>
-          <Table aria-label='simple table'>
-            <TableHead className={classes.head}>
-              <TableRow>
-                <TableCell className={classes.taskControl}>
-                  <Box className={classes.taskTitle}>{props.data.name}</Box>
-                  <ButtonGroup>
-                    <ListItemIcon button>
-                      <Edit
-                        onClick={() => setEditTask(true)}
-                        style={{ color: "#ffff" }}
-                      />
-                      <DeleteIcon
-                        onClick={() => props.deleteTask(props.data._id)}
-                        style={{ color: "#ffff" }}
-                      />
-                    </ListItemIcon>
-                  </ButtonGroup>
-                </TableCell>
-                <TableCell>
-                  <Box className={classes.headGroup}>
-                    <Typography className={classes.headTitle}>
-                      Status
-                    </Typography>
-                    <Edit
-                      onClick={() => setEditStatus(true)}
-                      style={{ color: "#ffff" }}
-                    />
-                  </Box>
-                </TableCell>
-                <TableCell>
-                  <Box className={classes.headGroup}>
-                    <Typography className={classes.headTitle}>
-                      Executor
-                    </Typography>
-                    <AssignIcon
-                      size='small'
-                      onClick={() => setAssign(true)}
-                      style={{ color: "#ffff" }}
-                    />
-                  </Box>
-                </TableCell>
-                <TableCell className={classes.headTitle}>Edited</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow key={props.data._id}>
-                <TableCell component='th' scope='row'>
-                  {editTask ? (
-                    <div>
-                      <TextField
-                        multiline
-                        variant='outlined'
-                        defaultValue={taskContent}
-                        onBlur={async (e) => {
-                          setTaskContent(e.target.value);
-                          await props.editTask(props.data._id, e.target.value);
-                          setEditTask(false);
-                        }}
-                      ></TextField>
-                    </div>
-                  ) : (
-                    <Typography align='justify'>
-                      {props.data.content}
-                    </Typography>
-                  )}
-                </TableCell>
-                <TableCell align='center'>
-                  <div>
-                    {editStatus ? (
-                      <div>
-                        <select
-                          name='status'
-                          onBlur={async (e) => {
-                            await props.setStatus(
-                              props.data._id,
-                              e.target.value
-                            );
-                            setEditStatus(false);
-                          }}
-                        >
-                          <option />
-                          <option value='waiting'>Waiting</option>
-                          <option value='implementation'>Implementation</option>
-                          <option value='verifying'>Verifying</option>
-                          <option value='releasing'>Releasing</option>
-                        </select>
-                      </div>
-                    ) : (
-                      <div className={classes.status}>
-                        <Typography>
-                          {props.data.status.toUpperCase()}
-                        </Typography>
-                      </div>
-                    )}
-                  </div>
-                </TableCell>
-                <TableCell align='center'>
-                  {assign ? (
-                    <AssignTo
-                      developers={props.developers}
-                      setDeveloper={setDeveloper}
-                      assignTask={props.assignTask}
-                      taskId={props.data._id}
-                      setAssign={setAssign}
-                    />
-                  ) : (
-                    <div>
-                      <div>{developer}</div>
-                      <DevIcon style={{ color: "rgba(245, 0, 87, 1)" }} />
-                    </div>
-                  )}
-                </TableCell>
-                <TableCell align='center'>
-                  {props.data.updatedAt.slice(0, 10)}
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </ListItem>
+      <TableRow>
+        <TableCell>
+          <Typography>{props.data.name}</Typography>
+        </TableCell>
+        <TableCell>
+          {editTask ? (
+            <div>
+              <TextField
+                className={classes.textField}
+                multiline
+                variant='outlined'
+                defaultValue={taskContent}
+                onBlur={handleContent}
+              ></TextField>
+            </div>
+          ) : (
+            <Typography align='justify'>{props.data.content}</Typography>
+          )}
+          <ButtonGroup>
+            <ListItemIcon button>
+              <Edit onClick={() => setEditTask(true)} />
+              <DeleteIcon onClick={() => props.deleteTask(props.data._id)} />
+            </ListItemIcon>
+          </ButtonGroup>
+        </TableCell>
+        <TableCell>
+          {editStatus ? (
+            <div>
+              <select name='status' onBlur={handleStatus}>
+                <option />
+                <option value='waiting'>Waiting</option>
+                <option value='implementation'>Implementation</option>
+                <option value='verifying'>Verifying</option>
+                <option value='releasing'>Releasing</option>
+              </select>
+            </div>
+          ) : (
+            <div className={classes.status}>
+              <p>{props.data.status.toUpperCase()}</p>
+              <Edit onClick={() => setEditStatus(true)} />
+            </div>
+          )}
+        </TableCell>
+        <TableCell>
+          <Box className={classes.headGroup}>
+            {assign ? (
+              <AssignTo
+                developers={props.developers}
+                setDeveloper={setDeveloper}
+                assignTask={props.assignTask}
+                taskId={props.data._id}
+                setAssign={setAssign}
+              />
+            ) : (
+              <>
+                <AssignIcon size='small' onClick={() => setAssign(true)} />
+                <Typography>{developer}</Typography>
+              </>
+            )}
+          </Box>
+        </TableCell>
+        <TableCell>{props.data.updatedAt.slice(0, 10)}</TableCell>
+      </TableRow>
     );
   } else {
     return (
-      <ListItem>
-        <TableContainer component={Paper}>
-          <Table aria-label='simple table'>
-            <TableHead className={classes.head}>
-              <TableRow>
-                <TableCell className={classes.headTitle}>
-                  {props.data.name}
-                </TableCell>
-                <TableCell className={classes.headTitle}>Status</TableCell>
-                <TableCell className={classes.headTitle}>Executor</TableCell>
-                <TableCell className={classes.headTitle}>Edited</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow key={props.data._id}>
-                <TableCell component='th' scope='row'>
-                  <div>{props.data.content}</div>
-                </TableCell>
-                <TableCell align='center'>
-                  <div>
-                    {editStatus ? (
-                      <div>
-                        <select
-                          name='status'
-                          onBlur={async (e) => {
-                            await props.setStatus(
-                              props.data._id,
-                              e.target.value
-                            );
-                            setEditStatus(false);
-                          }}
-                        >
-                          <option />
-                          <option value='waiting'>Waiting</option>
-                          <option value='implementation'>Implementation</option>
-                          <option value='verifying'>Verifying</option>
-                          <option value='releasing'>Releasing</option>
-                        </select>
-                      </div>
-                    ) : (
-                      <div className={classes.status}>
-                        <p>{props.data.status.toUpperCase()}</p>
-                        <Edit
-                          onClick={() => setEditStatus(true)}
-                          style={{ color: "#ffff" }}
-                        />
-                      </div>
-                    )}
-                  </div>
-                </TableCell>
-                <TableCell align='center'>
-                  <div>
-                    <div>{developer}</div>
-                    <DevIcon style={{ color: "rgba(245, 0, 87, 1)" }} />
-                  </div>
-                </TableCell>
-                <TableCell align='center'>
-                  {props.data.updatedAt.slice(0, 10)}
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </ListItem>
+      <TableRow>
+        <TableCell>
+          <Typography>{props.data.name}</Typography>
+        </TableCell>
+        <TableCell>
+          <Typography>{props.data.content}</Typography>
+        </TableCell>
+
+        <TableCell>
+          {props.data.executor && props.data.executor === props.userId && (
+            <Edit onClick={() => setEditStatus(true)} />
+          )}
+          {editStatus ? (
+            <div>
+              <select name='status' onBlur={handleStatus}>
+                <option />
+                <option value='waiting'>Waiting</option>
+                <option value='implementation'>Implementation</option>
+                <option value='verifying'>Verifying</option>
+                <option value='releasing'>Releasing</option>
+              </select>
+            </div>
+          ) : (
+            <div className={classes.status}>
+              <p>{props.data.status.toUpperCase()}</p>
+              {props.data.executor && props.data.executor === props.userId && (
+                <Edit onClick={() => setEditStatus(true)} />
+              )}
+            </div>
+          )}
+        </TableCell>
+        <TableCell>
+          <Typography>{developer}</Typography>
+          <DevIcon style={{ color: "rgba(245, 0, 87, 1)" }} />
+        </TableCell>
+        <TableCell>{props.data.updatedAt.slice(0, 10)}</TableCell>
+      </TableRow>
     );
   }
 };

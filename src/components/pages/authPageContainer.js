@@ -6,7 +6,6 @@ import { authUser } from "../../actions/session.actions";
 
 class AuthPageContainer extends React.Component {
   render() {
-    console.log("auth_container props", this.props);
     return (
       <>
         <AuthPage

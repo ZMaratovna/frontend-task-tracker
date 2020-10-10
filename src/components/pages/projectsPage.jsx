@@ -14,6 +14,7 @@ const ProjectsPage = (props) => {
     >
       <Projects
         projects={props.projects}
+        position={props.position}
         userId={props.userId}
         getProject={props.getProject}
         deleteProject={props.deleteProject}
@@ -21,7 +22,9 @@ const ProjectsPage = (props) => {
         assignProject={props.assignProject}
         developers={props.developers}
       />
-      <AddProject addProject={props.addProject} userId={props.userId} />
+      {props.position === "manager" && (
+        <AddProject addProject={props.addProject} userId={props.userId} />
+      )}
     </Box>
   );
 };

@@ -2,6 +2,7 @@ import {
   RECEIVE_CURRENT_USER,
   LOGOUT_CURRENT_USER,
   INVALID_TOKEN,
+  REGISTER,
 } from "../actions/session.actions";
 
 const _nullUser = Object.freeze({
@@ -23,8 +24,11 @@ const sessionReducer = (state = _nullUser, action) => {
     case INVALID_TOKEN:
       return {
         ...state,
-        authError: "Incorrect email or password",
+        authError: action.message,
       };
+    case REGISTER:
+      return { ...state, success: true };
+
     default:
       return state;
   }

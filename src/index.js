@@ -34,8 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       store.dispatch(authSuccess(token));
     }
-  } else {
-    store.dispatch(invalidTokenThunk());
   }
 
   ReactDOM.render(

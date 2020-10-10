@@ -17,6 +17,7 @@ const AssignTo = (props) => {
               const devId = e.target.options[index].id;
               const devname = e.target.options[index].value;
               props.setDeveloper(devname);
+
               {
                 props.isProject
                   ? await props.assignProject(

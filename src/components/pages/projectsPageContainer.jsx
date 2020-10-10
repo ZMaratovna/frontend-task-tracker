@@ -28,6 +28,7 @@ class ProjectsPageContainer extends React.Component {
         assignProject={this.props.assignProjectThunk}
         deleteProject={this.props.deleteProjectThunk}
         developers={this.props.developers}
+        position={this.props.position}
       />
     );
   }
@@ -37,6 +38,7 @@ const mapStateToProps = (state) => ({
   projects: state.Projects.projects,
   userId: state.Session.id,
   developers: state.User.developers,
+  position: state.Session.position,
 });
 
 ProjectsPageContainer = connect(mapStateToProps, {

@@ -1,11 +1,25 @@
 const ProjectsStyles = {
   listItem: {
+    width: "100%",
     borderBottom: "2px solid #3f51b5",
     display: "flex",
     justifyContent: "space-between",
     borderRadius: "4px",
     padding: "10px",
     listStyleType: "none",
+  },
+  textFieldContainer: {
+    width: "inherit",
+  },
+  textField: {
+    width: "100%",
+  },
+  devList: {
+    color: "rgba(61, 61, 59,0.7)",
+  },
+  devBox: {
+    display: "flex",
+    marginTop: "15px",
   },
   button: {
     height: "50%",
@@ -40,6 +54,11 @@ const ProjectsStyles = {
     justifyContent: "spaceBetween",
     alignSelf: "center",
     width: "50%",
+  },
+  textBox: {
+    textAlign: "left",
+    padding: "40px 10px",
+    margin: "30px 15px",
   },
 };
 

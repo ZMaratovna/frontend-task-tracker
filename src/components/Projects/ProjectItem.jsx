@@ -11,6 +11,7 @@ import TextField from "@material-ui/core/TextField";
 import AssignTo from "../Tasks/AssignTo";
 import Box from "@material-ui/core/Box";
 import styles from "../../styles/components/project/styles.js";
+import DevIcon from "@material-ui/icons/AccountCircle";
 
 const ProjectItem = (props) => {
   const history = useHistory();
@@ -20,12 +21,14 @@ const ProjectItem = (props) => {
 
   const useStyle = makeStyles(styles);
   const classes = useStyle();
+
   return (
     <ListItem key={props.index} className={classes.listItem}>
-      <div>
+      <div className={classes.textFieldContainer}>
         <Typography variant='h6'>{props.project.name}</Typography>
         {editProject ? (
           <TextField
+            className={classes.textField}
             multiline
             variant='outlined'
             defaultValue={props.project.content}
@@ -48,20 +51,19 @@ const ProjectItem = (props) => {
                 assignProject={props.assignProject}
               />
             ) : (
-              <Box>
-                <Typography variant='h6'> Developers:</Typography>
+              <Box className={classes.devBox}>
+                <Typography variant='h6' color='primary'>
+                  <DevIcon />
+                </Typography>
                 <Typography>
-                  {" "}
                   {props.developers ? (
-                    <div>
+                    <div className={classes.devList}>
                       {props.developers
                         .filter((dev) =>
                           dev.projects.includes(props.project._id)
                         )
                         .map((dev) => dev.username)
-                        .join(", ") +
-                        ", " +
-                        developer}
+                        .join(", ")}
                     </div>
                   ) : (
                     <div>Can't find anyone</div>
@@ -83,31 +85,33 @@ const ProjectItem = (props) => {
           more details
         </Button>
       </div>
-      <ButtonGroup
-        size='small'
-        orientation='vertical'
-        color='primary'
-        aria-label='vertical contained primary button group'
-        variant='text'
-      >
-        <Button>
-          <Edit onClick={() => setEditProject(true)} />
-        </Button>
-        <Button>
-          <AssignIcon
-            onClick={() => {
-              setAssign(true);
-            }}
-          />
-        </Button>
-        <Button>
-          <DeleteIcon
-            onClick={() => {
-              props.deleteProject(props.project._id);
-            }}
-          />
-        </Button>
-      </ButtonGroup>
+      {props.position === "manager" && (
+        <ButtonGroup
+          size='small'
+          orientation='vertical'
+          color='primary'
+          aria-label='vertical contained primary button group'
+          variant='text'
+        >
+          <Button>
+            <Edit onClick={() => setEditProject(true)} />
+          </Button>
+          <Button>
+            <AssignIcon
+              onClick={() => {
+                setAssign(true);
+              }}
+            />
+          </Button>
+          <Button>
+            <DeleteIcon
+              onClick={() => {
+                props.deleteProject(props.project._id);
+              }}
+            />
+          </Button>
+        </ButtonGroup>
+      )}
     </ListItem>
   );
 };

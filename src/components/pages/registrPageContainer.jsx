@@ -4,9 +4,21 @@ import RegistrationPage from "./registrPage";
 import { registerUserThunk } from "../../actions/session.actions";
 
 const RegistrationPageContainer = (props) => {
-  return <RegistrationPage registerUser={props.registerUser} />;
+  return (
+    <RegistrationPage
+      registerUser={props.registerUser}
+      error={props.authError}
+      isSuccess={props.isSuccess}
+    />
+  );
 };
 
-export default connect(null, { registerUser: registerUserThunk })(
+const mapStateToProps = (state) => {
+  return {
+    error: state.Session.authError,
+    isSuccess: state.Session.success,
+  };
+};
+export default connect(mapStateToProps, { registerUser: registerUserThunk })(
   RegistrationPageContainer
 );

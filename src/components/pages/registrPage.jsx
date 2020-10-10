@@ -20,8 +20,10 @@ class RegistrationPage extends React.Component {
         }}
       >
         <RegistrationForm
+          isSuccess={this.props.isSuccess}
           registerUser={this.props.registerUser}
           onSubmit={this.submit}
+          error={this.props.error}
         />
       </Box>
     );
