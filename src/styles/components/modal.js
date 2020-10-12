@@ -15,7 +15,11 @@ const theme = createMuiTheme({
 });
 
 const modalStyle = {
-  modalContainer: {
+  modal: {
+    transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+    borderRadius: "6px",
+  },
+  modalContent: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-evenly",

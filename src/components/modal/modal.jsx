@@ -5,6 +5,9 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import styles from "../../styles/components/modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
+import Dialog from "@material-ui/core/Dialog";
 
 const Modal = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(props.anchorEl);
@@ -21,22 +24,19 @@ const Modal = (props) => {
 
   const classes = useStyles();
   return (
-    <Popover
+    <Dialog
+      className={classes.modal}
       id={id}
       open={open}
       anchorEl={props.anchorEl}
       onClose={handleClose}
-      anchorOrigin={{
-        vertical: "bottom",
-        horizontal: "center",
-      }}
       disableBackdropClick={true}
       transformOrigin={{
         vertical: "top",
         horizontal: "center",
       }}
     >
-      <Box className={classes.modalContainer}>
+      <Box className={classes.modalContent}>
         <Typography variant='h5' className={classes.typography}>
           Are you sure you want to delete that item?
         </Typography>
@@ -59,7 +59,7 @@ const Modal = (props) => {
           </Button>
         </Box>
       </Box>
-    </Popover>
+    </Dialog>
   );
 };
 
