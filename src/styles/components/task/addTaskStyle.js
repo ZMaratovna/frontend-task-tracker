@@ -1,6 +1,6 @@
 const addTaskStyle = {
   addContainer: {
-    margin: "0 auto",
+    margin: "30px auto",
     display: "flex",
     justifyContent: "center",
   },
@@ -27,6 +27,11 @@ const addTaskStyle = {
   addButton: {
     width: "100%",
     marginTop: "20px",
+  },
+  devGroup: {
+    display: "flex",
+    textAlign: "center",
+    flexDirection: "column",
   },
 };
 

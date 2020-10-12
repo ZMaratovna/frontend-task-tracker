@@ -28,6 +28,7 @@ class ProjectContainer extends React.Component {
       <Project
         project={this.props.project}
         tasks={this.props.tasks}
+        //fetchTasks={this.props.fetchTasks}
         assignProject={this.props.assignProjectThunk}
         deleteTask={this.props.deleteTaskThunk}
         addTask={this.props.addTaskThunk}

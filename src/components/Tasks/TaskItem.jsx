@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 import AssignTo from "./AssignTo";
+import Modal from "../modal/modal";
 
-import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 
 import ButtonGroup from "@material-ui/core/ButtonGroup";
@@ -14,13 +14,8 @@ import DeleteIcon from "@material-ui/icons/DeleteOutlined";
 import AssignIcon from "@material-ui/icons/AssignmentInd";
 import DevIcon from "@material-ui/icons/AccountCircle";
 
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 
 import styles from "../../styles/components/task/taskStyle.js";
@@ -31,7 +26,7 @@ const TaskItem = (props) => {
     executor = props.developers.find((dev) => dev._id === executor).username;
     console.log("executor", executor);
   } else {
-    executor = "not assign";
+    executor = "n/a";
   }
 
   const [editTask, setEditTask] = useState(false);
@@ -39,12 +34,16 @@ const TaskItem = (props) => {
   const [assign, setAssign] = useState(null);
   const [editStatus, setEditStatus] = useState(false);
   const [developer, setDeveloper] = useState(executor);
+  const [openModal, setOpenModal] = useState(false);
+  const anchorRef = useRef();
+  console.log(openModal);
 
   const handleContent = async (e) => {
     setTaskContent(e.target.value);
     await props.editTask(props.data._id, e.target.value);
     setEditTask(false);
   };
+
   const handleStatus = async (e) => {
     await props.setStatus(props.data._id, e.target.value);
     setEditStatus(false);
@@ -55,10 +54,19 @@ const TaskItem = (props) => {
 
   if (props.position === "manager") {
     return (
-      <TableRow>
+      <TableRow ref={anchorRef}>
         <TableCell>
           <Typography>{props.data.name}</Typography>
+          {openModal && (
+            <Modal
+              id={props.data._id}
+              delete={props.deleteTask}
+              anchorEl={anchorRef.current}
+              isOpen={setOpenModal}
+            />
+          )}
         </TableCell>
+
         <TableCell>
           {editTask ? (
             <div>
@@ -75,11 +83,21 @@ const TaskItem = (props) => {
           )}
           <ButtonGroup>
             <ListItemIcon button>
-              <Edit onClick={() => setEditTask(true)} />
-              <DeleteIcon onClick={() => props.deleteTask(props.data._id)} />
+              <Edit
+                className={classes.icon}
+                onClick={() => setEditTask(true)}
+              />
+              <DeleteIcon
+                onClick={(e) => {
+                  console.log(e.target);
+                  setOpenModal(true);
+                }}
+                className={classes.icon}
+              />
             </ListItemIcon>
           </ButtonGroup>
         </TableCell>
+
         <TableCell>
           {editStatus ? (
             <div>
@@ -94,12 +112,15 @@ const TaskItem = (props) => {
           ) : (
             <div className={classes.status}>
               <p>{props.data.status.toUpperCase()}</p>
-              <Edit onClick={() => setEditStatus(true)} />
+              <Edit
+                onClick={() => setEditStatus(true)}
+                style={{ color: "#3f51b5" }}
+              />
             </div>
           )}
         </TableCell>
         <TableCell>
-          <Box className={classes.headGroup}>
+          <Box>
             {assign ? (
               <AssignTo
                 developers={props.developers}
@@ -109,10 +130,14 @@ const TaskItem = (props) => {
                 setAssign={setAssign}
               />
             ) : (
-              <>
-                <AssignIcon size='small' onClick={() => setAssign(true)} />
+              <Box className={classes.devGroup}>
+                <AssignIcon
+                  size='small'
+                  onClick={() => setAssign(true)}
+                  style={{ color: "#3f51b5" }}
+                />
                 <Typography>{developer}</Typography>
-              </>
+              </Box>
             )}
           </Box>
         </TableCell>
@@ -128,10 +153,12 @@ const TaskItem = (props) => {
         <TableCell>
           <Typography>{props.data.content}</Typography>
         </TableCell>
-
         <TableCell>
           {props.data.executor && props.data.executor === props.userId && (
-            <Edit onClick={() => setEditStatus(true)} />
+            <Edit
+              className={classes.icon}
+              onClick={() => setEditStatus(true)}
+            />
           )}
           {editStatus ? (
             <div>
@@ -147,14 +174,17 @@ const TaskItem = (props) => {
             <div className={classes.status}>
               <p>{props.data.status.toUpperCase()}</p>
               {props.data.executor && props.data.executor === props.userId && (
-                <Edit onClick={() => setEditStatus(true)} />
+                <Edit
+                  className={classes.icon}
+                  onClick={() => setEditStatus(true)}
+                />
               )}
             </div>
           )}
         </TableCell>
         <TableCell>
           <Typography>{developer}</Typography>
-          <DevIcon style={{ color: "rgba(245, 0, 87, 1)" }} />
+          <DevIcon className={classes.icon} style={{ color: "#3f51b5" }} />
         </TableCell>
         <TableCell>{props.data.updatedAt.slice(0, 10)}</TableCell>
       </TableRow>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { makeStyles, Typography } from "@material-ui/core";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
@@ -12,12 +12,15 @@ import AssignTo from "../Tasks/AssignTo";
 import Box from "@material-ui/core/Box";
 import styles from "../../styles/components/project/styles.js";
 import DevIcon from "@material-ui/icons/AccountCircle";
+import Modal from "../modal/modal.jsx";
 
 const ProjectItem = (props) => {
   const history = useHistory();
   const [editProject, setEditProject] = useState(false);
   const [assign, setAssign] = useState(null);
   const [developer, setDeveloper] = useState("");
+  const [openModal, setOpenModal] = useState(false);
+  const projectRef = useRef();
 
   const useStyle = makeStyles(styles);
   const classes = useStyle();
@@ -26,6 +29,14 @@ const ProjectItem = (props) => {
     <ListItem key={props.index} className={classes.listItem}>
       <div className={classes.textFieldContainer}>
         <Typography variant='h6'>{props.project.name}</Typography>
+        {openModal && (
+          <Modal
+            anchorEl={projectRef.current}
+            delete={props.deleteProject}
+            id={props.project._id}
+            isOpen={setOpenModal}
+          />
+        )}
         {editProject ? (
           <TextField
             className={classes.textField}
@@ -40,7 +51,9 @@ const ProjectItem = (props) => {
           ></TextField>
         ) : (
           <div>
-            <Typography variant='body1'>{props.project.content}</Typography>
+            <Typography variant='body1' ref={projectRef}>
+              {props.project.content}
+            </Typography>
             {assign ? (
               <AssignTo
                 developers={props.developers}
@@ -104,11 +117,7 @@ const ProjectItem = (props) => {
             />
           </Button>
           <Button>
-            <DeleteIcon
-              onClick={() => {
-                props.deleteProject(props.project._id);
-              }}
-            />
+            <DeleteIcon onClick={(e) => setOpenModal(true)} />
           </Button>
         </ButtonGroup>
       )}
