@@ -9,6 +9,7 @@ import ProjectsPageContainer from "./components/pages/projectsPageContainer";
 import ProjectContainer from "./components/Projects/ProjectContainer";
 import TasksContainer from "./components/Tasks/TasksContainer";
 import MyProjectsContainer from "./components/Projects/MyProjectsContainer";
+import Contacts from "./components/pages/Contacts";
 
 import "./App.css";
 
@@ -18,6 +19,7 @@ function App() {
       <HeaderContainer />
       <Switch>
         <Route exact path='/' component={SplashPage}></Route>
+        <Route exact path='/contacts' component={Contacts}></Route>
         <AuthRoute
           exact
           path='/register'

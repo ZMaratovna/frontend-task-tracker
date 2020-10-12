@@ -11,7 +11,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import Edit from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/DeleteOutlined";
-import AssignIcon from "@material-ui/icons/AssignmentInd";
+import AssignIcon from "@material-ui/icons/PersonAdd";
 import DevIcon from "@material-ui/icons/AccountCircle";
 
 import TableCell from "@material-ui/core/TableCell";
