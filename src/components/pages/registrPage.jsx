@@ -1,33 +1,32 @@
 import React from "react";
 import RegistrationForm from "../forms/registrationForm";
 import Box from "@material-ui/core/Box";
-import Image from "../../img/good_team.svg";
+import { makeStyles } from "@material-ui/core/styles";
+import styles from "../../styles/pages/forms_pages";
+import { Container, Paper } from "@material-ui/core";
+import Footer from "../Footer/Footer";
 
-class RegistrationPage extends React.Component {
-  submit = (data) => {
-    this.props.registerUser(data);
+const RegistrationPage = (props) => {
+  const submit = (data) => {
+    props.registerUser(data);
   };
-  render() {
-    return (
-      <Box
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100vh",
-          width: "100vw",
-          backgroundImage: `url(${Image})`,
-        }}
-      >
+  const useStyles = makeStyles(styles);
+  const classes = useStyles();
+
+  return (
+    <Container>
+      <Paper elevation={0} className={classes.pageContainer}>
+        <div className={classes.wave}></div>
         <RegistrationForm
-          isSuccess={this.props.isSuccess}
-          registerUser={this.props.registerUser}
-          onSubmit={this.submit}
-          error={this.props.error}
+          isSuccess={props.isSuccess}
+          registerUser={props.registerUser}
+          onSubmit={submit}
+          error={props.error}
         />
-      </Box>
-    );
-  }
-}
+      </Paper>
+      <Footer />
+    </Container>
+  );
+};
 
 export default RegistrationPage;

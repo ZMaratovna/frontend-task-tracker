@@ -50,7 +50,10 @@ export const authUser = (userData) => (dispatch) =>
   API.auth(userData).then(
     (res) => {
       const token = res.data;
-      if (token === "Incorrect email or password") {
+      if (
+        token === "Incorrect email or password" ||
+        token === "Please confirm your email address before"
+      ) {
         dispatch(invalidToken(token));
       } else {
         localStorage.setItem("jwtToken", token);

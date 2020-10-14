@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, Suspense } from "react";
 
 import AssignTo from "./AssignTo";
 import Modal from "../modal/modal";
@@ -36,7 +36,6 @@ const TaskItem = (props) => {
   const [developer, setDeveloper] = useState(executor);
   const [openModal, setOpenModal] = useState(false);
   const anchorRef = useRef();
-  console.log(openModal);
 
   const handleContent = async (e) => {
     setTaskContent(e.target.value);
@@ -55,8 +54,10 @@ const TaskItem = (props) => {
   if (props.position === "manager") {
     return (
       <TableRow ref={anchorRef}>
-        <TableCell>
-          <Typography>{props.data.name}</Typography>
+        <TableCell align='center' className={classes.taskTitleCell}>
+          <Typography className={classes.taskTitle}>
+            {props.data.name}
+          </Typography>
           {openModal && (
             <Modal
               id={props.data._id}
@@ -67,7 +68,7 @@ const TaskItem = (props) => {
           )}
         </TableCell>
 
-        <TableCell>
+        <TableCell align='justify'>
           {editTask ? (
             <div>
               <TextField
@@ -79,7 +80,9 @@ const TaskItem = (props) => {
               ></TextField>
             </div>
           ) : (
-            <Typography align='justify'>{props.data.content}</Typography>
+            <Typography className={classes.taskContent}>
+              {props.data.content}
+            </Typography>
           )}
           <ButtonGroup>
             <ListItemIcon button>
@@ -89,7 +92,6 @@ const TaskItem = (props) => {
               />
               <DeleteIcon
                 onClick={(e) => {
-                  console.log(e.target);
                   setOpenModal(true);
                 }}
                 className={classes.icon}
@@ -98,7 +100,7 @@ const TaskItem = (props) => {
           </ButtonGroup>
         </TableCell>
 
-        <TableCell>
+        <TableCell align='center'>
           {editStatus ? (
             <div>
               <select name='status' onBlur={handleStatus}>
@@ -119,7 +121,7 @@ const TaskItem = (props) => {
             </div>
           )}
         </TableCell>
-        <TableCell>
+        <TableCell align='center'>
           <Box>
             {assign ? (
               <AssignTo
@@ -136,7 +138,9 @@ const TaskItem = (props) => {
                   onClick={() => setAssign(true)}
                   style={{ color: "#3f51b5" }}
                 />
-                <Typography>{developer}</Typography>
+                <Typography className={classes.developer}>
+                  {developer}
+                </Typography>
               </Box>
             )}
           </Box>
@@ -147,19 +151,17 @@ const TaskItem = (props) => {
   } else {
     return (
       <TableRow>
-        <TableCell>
-          <Typography>{props.data.name}</Typography>
+        <TableCell className={classes.taskTitleCell} align='center'>
+          <Typography className={classes.taskTitle}>
+            {props.data.name}
+          </Typography>
         </TableCell>
-        <TableCell>
-          <Typography>{props.data.content}</Typography>
+        <TableCell align='justify'>
+          <Typography className={classes.taskContent}>
+            {props.data.content}
+          </Typography>
         </TableCell>
-        <TableCell>
-          {props.data.executor && props.data.executor === props.userId && (
-            <Edit
-              className={classes.icon}
-              onClick={() => setEditStatus(true)}
-            />
-          )}
+        <TableCell align='center'>
           {editStatus ? (
             <div>
               <select name='status' onBlur={handleStatus}>
@@ -182,8 +184,10 @@ const TaskItem = (props) => {
             </div>
           )}
         </TableCell>
-        <TableCell>
-          <Typography>{developer}</Typography>
+        <TableCell align='center'>
+          <Suspense fallback={<h1>Loading profile...</h1>}>
+            <Typography className={classes.developer}>{developer}</Typography>
+          </Suspense>
           <DevIcon className={classes.icon} style={{ color: "#3f51b5" }} />
         </TableCell>
         <TableCell>{props.data.updatedAt.slice(0, 10)}</TableCell>

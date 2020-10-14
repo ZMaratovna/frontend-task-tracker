@@ -1,3 +1,4 @@
+import theme from "../../../styles/utils/theme";
 const RegisterStyles = {
   field: {
     marginBottom: "10px",
@@ -5,13 +6,14 @@ const RegisterStyles = {
     textAlign: "center",
   },
   formWrapper: {
+    zIndex: "1000",
     display: "flex",
     justifyContent: "center",
     padding: "50px 20px",
     width: "400px",
-    border: "1px solid #3f51b5",
+    border: `1px solid ${theme.palette.primary.main}`,
     borderRadius: "10px",
-    boxShadow: "1px 1px 2px #3f51b5",
+    boxShadow: `1px 1px 2px ${theme.palette.primary.main}`,
     backgroundColor: "rgba(255,255,255,0.9)",
   },
   label: {
@@ -26,8 +28,13 @@ const RegisterStyles = {
   },
   submitMessage: {
     fontSize: "20px",
-    color: "#3f51b5",
+    color: theme.palette.primary.main,
     fontWeight: "600",
+  },
+  button: {
+    backgroundColor: theme.palette.secondary.main,
+    color: theme.palette.secondary.contrastText,
+    marginTop: "20px",
   },
 };
 

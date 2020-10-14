@@ -108,7 +108,6 @@ const RegistrationForm = (props) => {
               variant='contained'
               className={classes.button}
               disabled={submitting}
-              color='secondary'
               fullWidth
             >
               {submitting ? "In progress…" : "Sign Up"}

@@ -19,13 +19,13 @@ const Header = (props) => {
   const [openMenu, setOpenMenu] = useState(false);
 
   return (
-    <div>
-      <AppBar position='fixed'>
+    <Container className={classes.root}>
+      <AppBar position='fixed' color='transparent' elevation={0}>
         <Container>
           <Toolbar>
             <IconButton edge='end' className={classes.menuButton}>
               <MenuIcon
-                color='secondary'
+                className={classes.menuIcon}
                 ref={menuRef}
                 onClick={() => setOpenMenu(true)}
               ></MenuIcon>
@@ -45,9 +45,8 @@ const Header = (props) => {
                   <span className={classes.userName}>{props.userName}</span>
                 </Box>
                 <Button
-                  className={classes.menuButton}
-                  variant='outlined'
-                  color='inherit'
+                  className={classes.logoutBtn}
+                  variant='text'
                   size='small'
                   onClick={async (e) => {
                     e.preventDefault();
@@ -61,13 +60,16 @@ const Header = (props) => {
               <>
                 <Button
                   href='/auth'
-                  className={classes.menuButton}
+                  className={classes.primaryBtn}
                   variant='outlined'
-                  color='inherit'
                 >
                   Log In
                 </Button>
-                <Button variant='contained' color='secondary' href='/register'>
+                <Button
+                  variant='contained'
+                  href='/register'
+                  className={classes.secondaryBtn}
+                >
                   Sign Up
                 </Button>
               </>
@@ -75,7 +77,7 @@ const Header = (props) => {
           </Toolbar>
         </Container>
       </AppBar>
-    </div>
+    </Container>
   );
 };
 

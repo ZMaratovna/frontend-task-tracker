@@ -37,8 +37,11 @@ export default function AddProject(props) {
           <div className={classes.buttonText}>
             <Typography color='primary'>ADD NEW PROJECT</Typography>
           </div>
-          <Fab size='small' color='primary' aria-label='add'>
-            <AddIcon onClick={() => setEditMode(true)} />
+          <Fab className={classes.fabIcon} size='small' aria-label='add'>
+            <AddIcon
+              className={classes.icon}
+              onClick={() => setEditMode(true)}
+            />
           </Fab>
         </div>
       ) : (

@@ -6,35 +6,52 @@ import Popper from "@material-ui/core/Popper";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import Link from "@material-ui/core/Link";
-
+import { makeStyles, Typography } from "@material-ui/core";
+import styles from "../styles/components/menu";
 const Menu = (props) => {
   const [open, setOpen] = useState(true);
   const handleClose = () => {
     setOpen(false);
     props.toggleOpen(false);
   };
+
+  const useStyles = makeStyles(styles);
+  const classes = useStyles();
   return (
-    <Popper open={open} anchorEl={props.anchorEl} transition disablePortal>
-      {({ TransitionProps, placement }) => (
-        <Grow
-          {...TransitionProps}
-          id='menu-list-grow'
-          style={{
-            transformOrigin:
-              placement === "bottom" ? "center top" : "center bottom",
-          }}
-        >
-          <Paper>
+    <Popper
+      open={open}
+      anchorEl={props.anchorEl}
+      transition
+      disablePortal
+      className={classes.popper}
+    >
+      {({ TransitionProps }) => (
+        <Grow {...TransitionProps} id='menu-list-grow'>
+          <Paper className={classes.paper}>
             <ClickAwayListener onClickAway={handleClose}>
-              <MenuList>
+              <MenuList className={classes.menu}>
                 <MenuItem>
-                  <Link href='/'>About</Link>
+                  <Link underline='none' className={classes.menuItem} href='/'>
+                    About
+                  </Link>
                 </MenuItem>
                 <MenuItem>
-                  <Link href='/myTasks'>My Tasks</Link>
+                  <Link
+                    underline='none'
+                    className={classes.menuItem}
+                    href='/projects'
+                  >
+                    Projects
+                  </Link>
                 </MenuItem>
                 <MenuItem>
-                  <Link href='/contacts'>Contacts</Link>
+                  <Link
+                    underline='none'
+                    className={classes.menuItem}
+                    href='/contacts'
+                  >
+                    Contacts
+                  </Link>
                 </MenuItem>
               </MenuList>
             </ClickAwayListener>

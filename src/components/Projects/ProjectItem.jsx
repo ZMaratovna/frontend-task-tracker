@@ -66,7 +66,7 @@ const ProjectItem = (props) => {
             ) : (
               <Box className={classes.devBox}>
                 <Typography variant='h6' color='primary'>
-                  <DevIcon />
+                  <DevIcon className={classes.devIcon} />
                 </Typography>
                 <Typography>
                   {props.developers ? (
@@ -88,8 +88,8 @@ const ProjectItem = (props) => {
         )}
         <Button
           className={classes.button}
-          color='secondary'
           variant='text'
+          color='secondary'
           onClick={() => {
             props.getProject(props.project._id);
             history.push(`/projects/${props.project._id}`);
@@ -107,17 +107,24 @@ const ProjectItem = (props) => {
           variant='text'
         >
           <Button>
-            <Edit onClick={() => setEditProject(true)} />
+            <Edit
+              className={classes.icon}
+              onClick={() => setEditProject(true)}
+            />
           </Button>
           <Button>
             <AssignIcon
+              className={classes.icon}
               onClick={() => {
                 setAssign(true);
               }}
             />
           </Button>
           <Button>
-            <DeleteIcon onClick={(e) => setOpenModal(true)} />
+            <DeleteIcon
+              className={classes.icon}
+              onClick={(e) => setOpenModal(true)}
+            />
           </Button>
         </ButtonGroup>
       )}
