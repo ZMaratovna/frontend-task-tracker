@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, Suspense } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TaskItem from "./TaskItem";
 import AddTask from "./AddTask";
@@ -14,6 +14,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Footer from "../Footer/Footer";
+import CircularProgress from "../spinner";
 
 const TaskList = (props) => {
   const [filterMode, setFilterMode] = useState(false);
@@ -75,13 +76,29 @@ const TaskList = (props) => {
             {filterMode ? (
               <TableBody>
                 {userTasks.map((task, index) => {
-                  return <TaskItem {...props} data={task} key={index} />;
+                  return (
+                    <Suspense
+                      fallback={
+                        <CircularProgress variant='static' {...props} />
+                      }
+                    >
+                      <TaskItem {...props} data={task} key={index} />
+                    </Suspense>
+                  );
                 })}
               </TableBody>
             ) : (
               <TableBody>
                 {props.tasks.map((task, index) => {
-                  return <TaskItem {...props} data={task} key={index} />;
+                  return (
+                    <Suspense
+                      fallback={
+                        <CircularProgress variant='static' {...props} />
+                      }
+                    >
+                      <TaskItem {...props} data={task} key={index} />
+                    </Suspense>
+                  );
                 })}
               </TableBody>
             )}

@@ -9,7 +9,6 @@ import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
 import styles from "../../styles/components/forms/AuthStyle.js";
 const LoginForm = (props) => {
-  console.log("authprops", props);
   const { handleSubmit, submitting } = props;
   const useStyles = makeStyles(styles);
 

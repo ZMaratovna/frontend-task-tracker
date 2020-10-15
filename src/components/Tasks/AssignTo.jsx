@@ -2,16 +2,17 @@ import React, { useState } from "react";
 
 const AssignTo = (props) => {
   const [editMode, setEditMode] = useState(true);
-
+  const handleAssign = async (e) => {
+    setEditMode(false);
+    props.setAssign(false);
+  };
+  const handleChange = async (e) => {};
   return (
     <div>
       {editMode ? (
         <div>
           <select
-            onBlur={async (e) => {
-              setEditMode(false);
-              props.setAssign(false);
-            }}
+            onBlur={handleAssign}
             onChange={async (e) => {
               const index = e.target.selectedIndex;
               const devId = e.target.options[index].id;

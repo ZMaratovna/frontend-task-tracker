@@ -1,10 +1,9 @@
 import React from "react";
 import classNames from "classnames";
-import { Paper, Container, Typography } from "@material-ui/core";
+import { Paper, Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import styles from "../../styles/pages/Contacts";
 import Box from "@material-ui/core/Box";
-import IconButton from "@material-ui/core/IconButton";
 import TelegramIcon from "@material-ui/icons/Telegram";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import FacebookIcon from "@material-ui/icons/Facebook";
@@ -14,6 +13,7 @@ import Footer from "../Footer/Footer";
 const Contacts = () => {
   const useStyles = makeStyles(styles);
   const classes = useStyles();
+
   const spanClasses1 = classNames({
     [classes.char]: true,
     [classes.char1]: true,

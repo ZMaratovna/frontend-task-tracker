@@ -9,11 +9,11 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+
 import { makeStyles } from "@material-ui/core/styles";
 import styles from "../../styles/components/forms/RegisterStyle.js";
 
 const RegistrationForm = (props) => {
-  console.log(props);
   const { handleSubmit, pristine, reset, submitting } = props;
   const [isRegister, setIsRegister] = useState(false);
   const useStyles = makeStyles(styles);

@@ -18,6 +18,10 @@ const Modal = (props) => {
     setAnchorEl(null);
     props.isOpen(false);
   };
+  const handleDelete = () => {
+    handleClose();
+    props.delete(props.id);
+  };
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
@@ -52,10 +56,7 @@ const Modal = (props) => {
             <Button
               variant='contained'
               className={classes.button}
-              onClick={() => {
-                handleClose();
-                props.delete(props.id);
-              }}
+              onClick={handleDelete}
             >
               Delete
             </Button>

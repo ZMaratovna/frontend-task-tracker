@@ -8,7 +8,7 @@ import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
 import styles from "../../styles/components/project/styles.js";
 
-export default function AddProject(props) {
+const AddProject = (props) => {
   const [editMode, setEditMode] = useState(false);
   const [newName, setNewName] = useState({});
   const [newContent, setNewContent] = useState({});
@@ -79,4 +79,6 @@ export default function AddProject(props) {
       )}
     </Container>
   );
-}
+};
+
+export default AddProject;

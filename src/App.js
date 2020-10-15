@@ -1,15 +1,16 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ThemeProvider } from "@material-ui/core/styles";
-import theme from "./styles/utils/theme";
+import { AuthRoute, ProtectedRoute } from "./utils/route_util";
+
 import HeaderContainer from "./components/Header/HeaderContainer";
 import RegistrationPageContainer from "./components/pages/registrPageContainer";
 import authPageContainer from "./components/pages/authPageContainer";
 import SplashPage from "./components/pages/splashPage";
-import { AuthRoute, ProtectedRoute } from "./utils/route_util";
 import ProjectsPageContainer from "./components/pages/projectsPageContainer";
 import ProjectContainer from "./components/Projects/ProjectContainer";
 import Contacts from "./components/pages/Contacts";
+import theme from "./styles/utils/theme";
 
 import "./App.css";
 

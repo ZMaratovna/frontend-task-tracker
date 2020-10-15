@@ -24,7 +24,6 @@ const TaskItem = (props) => {
   let executor = props.data.executor;
   if (executor && props.developers) {
     executor = props.developers.find((dev) => dev._id === executor).username;
-    console.log("executor", executor);
   } else {
     executor = "n/a";
   }

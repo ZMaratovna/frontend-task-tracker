@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { makeStyles, Typography } from "@material-ui/core";
 import ButtonGroup from "@material-ui/core/ButtonGroup";

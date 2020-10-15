@@ -4,20 +4,18 @@ import AuthPage from "./authPage";
 import { authSuccess } from "../../actions/session.actions";
 import { authUser } from "../../actions/session.actions";
 
-class AuthPageContainer extends React.Component {
-  render() {
-    return (
-      <>
-        <AuthPage
-          authSuccess={this.props.authSuccess}
-          authUser={this.props.authUser}
-          isLoggedIn={this.props.isLoggedIn}
-          error={this.props.authError}
-        />
-      </>
-    );
-  }
-}
+const AuthPageContainer = (props) => {
+  return (
+    <>
+      <AuthPage
+        authSuccess={props.authSuccess}
+        authUser={props.authUser}
+        isLoggedIn={props.isLoggedIn}
+        error={props.authError}
+      />
+    </>
+  );
+};
 
 const mapStateToProps = (state) => {
   return {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Project from "./Project";
 import { connect } from "react-redux";
 import {
@@ -16,34 +16,35 @@ import {
   getUserTasksThunk,
 } from "../../actions/task.actions";
 
-class ProjectContainer extends React.Component {
-  async componentDidMount() {
-    await this.props.getDevelopersThunk();
-    await this.props.getProjectThunk(this.props.match.params.id);
-    await this.props.fetchTasks(this.props.match.params.id);
-  }
+const ProjectContainer = (props) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      props.getDevelopersThunk();
+      props.getProjectThunk(props.match.params.id);
+      await props.fetchTasks(props.match.params.id);
+    };
+    fetchData();
+  }, []);
 
-  render() {
-    return (
-      <Project
-        project={this.props.project}
-        tasks={this.props.tasks}
-        assignProject={this.props.assignProjectThunk}
-        deleteTask={this.props.deleteTaskThunk}
-        addTask={this.props.addTaskThunk}
-        editTask={this.props.editTaskThunk}
-        getMyTasks={this.props.getUserTasksThunk}
-        setStatus={this.props.setStatusThunk}
-        developers={this.props.developers}
-        assignTask={this.props.assignTaskThunk}
-        position={this.props.position}
-        userId={this.props.userId}
-        username={this.props.usename}
-        projectId={this.props.match.params.id}
-      />
-    );
-  }
-}
+  return (
+    <Project
+      project={props.project}
+      tasks={props.tasks}
+      assignProject={props.assignProjectThunk}
+      deleteTask={props.deleteTaskThunk}
+      addTask={props.addTaskThunk}
+      editTask={props.editTaskThunk}
+      getMyTasks={props.getUserTasksThunk}
+      setStatus={props.setStatusThunk}
+      developers={props.developers}
+      assignTask={props.assignTaskThunk}
+      position={props.position}
+      userId={props.userId}
+      username={props.usename}
+      projectId={props.match.params.id}
+    />
+  );
+};
 
 const mapStateToProps = (state) => ({
   position: state.Session.position,
@@ -53,7 +54,7 @@ const mapStateToProps = (state) => ({
   tasks: state.Tasks.projectTasks,
   developers: state.User.developers,
 });
-ProjectContainer = connect(mapStateToProps, {
+export default connect(mapStateToProps, {
   getProjectThunk,
   assignProjectThunk,
   fetchTasks,
@@ -65,4 +66,3 @@ ProjectContainer = connect(mapStateToProps, {
   setStatusThunk,
   getDevelopersThunk,
 })(ProjectContainer);
-export default ProjectContainer;

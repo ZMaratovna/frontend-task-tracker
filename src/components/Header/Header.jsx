@@ -18,6 +18,11 @@ const Header = (props) => {
   const menuRef = useRef();
   const [openMenu, setOpenMenu] = useState(false);
 
+  const handleLogout = (e) => {
+    e.preventDefault();
+    props.logout();
+  };
+
   return (
     <Container className={classes.root}>
       <AppBar position='fixed' color='transparent' elevation={0}>
@@ -48,10 +53,7 @@ const Header = (props) => {
                   className={classes.logoutBtn}
                   variant='text'
                   size='small'
-                  onClick={async (e) => {
-                    e.preventDefault();
-                    props.logout();
-                  }}
+                  onClick={handleLogout}
                 >
                   Log Out
                 </Button>

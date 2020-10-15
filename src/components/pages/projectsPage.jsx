@@ -1,7 +1,6 @@
 import React from "react";
 import Projects from "../Projects/Projects.jsx";
 import AddProject from "../Projects/AddProject";
-import Box from "@material-ui/core/Box";
 import { Container, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Footer from "../Footer/Footer.jsx";

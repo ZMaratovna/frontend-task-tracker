@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import { InputLabel } from "@material-ui/core";
 import Input from "@material-ui/core/Input";
 const myInput = (props) => {
   const { input, type, placeholder, meta } = props;
