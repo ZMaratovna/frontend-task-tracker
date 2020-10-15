@@ -23,6 +23,12 @@ const ProjectsStyles = (theme) => {
       height: "50%",
       alignSelf: "center",
     },
+    noProjects: {
+      color: theme.palette.secondary.dark,
+      padding: "50px",
+      borderBottom: `3px dashed ${theme.palette.primary.main}`,
+      fontSize: "2rem",
+    },
   };
 };
 

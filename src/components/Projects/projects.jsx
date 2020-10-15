@@ -7,11 +7,15 @@ const Projects = (props) => {
   const classes = useStyle();
   return (
     <Container className={classes.root}>
-      <List className={classes.listWrapper}>
-        {props.projects.map((project, index) => (
-          <ProjectItem project={project} index={index} {...props} />
-        ))}
-      </List>
+      {!props.projects.length ? (
+        <div className={classes.noProjects}>You haven't had any projects yet...</div>
+      ) : (
+        <List className={classes.listWrapper}>
+          {props.projects.map((project, index) => (
+            <ProjectItem project={project} index={index} {...props} />
+          ))}
+        </List>
+      )}
     </Container>
   );
 };
