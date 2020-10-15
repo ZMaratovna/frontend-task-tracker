@@ -1,5 +1,5 @@
 import React from "react";
-import Projects from "../Projects/Projects.jsx";
+import Projects from "../Projects/projects.jsx";
 import AddProject from "../Projects/AddProject";
 import { Container, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
