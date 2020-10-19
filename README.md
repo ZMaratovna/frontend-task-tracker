@@ -32,3 +32,36 @@
 ### Stack: Frontend - React.js (Styles = Material UI), Backend - NodeJS, Express, MongoDB
 
 
+# DEMO
+
+------
+> Click to images and watch video on youtube
+------
+
+### PART1
+[![alter text](https://i.ibb.co/5jfCTsS/rsz-screenshot-2020-10-19-at-144813.png)](https://www.youtube.com/watch?v=OAhs9msCE7o)
+
+
+
+### PART2
+***
+
+[![alter text](https://i.ibb.co/fCwpFsQ/rsz-screenshot-2020-10-16-at-133948.png)](https://www.youtube.com/watch?v=pEqHWynKU_M&feature=youtu.be)
+
+
+
+# Installation
+
+For using that app you should also launch server located in  ***backend-for-Task-Tracker*** repo.
+
+### Installation client side:
+
+```
+npm install 
+npm start
+```
+
+
+
+
+
